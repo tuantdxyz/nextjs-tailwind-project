@@ -1,12 +1,17 @@
 "use client";
 import { useState } from 'react';
+import { useBillingPlan } from './useBillingPlan'; // Đường dẫn đúng tới hook
+import PlanSwitch from './planSwitch'; // Đường dẫn đúng tới PlanSwitch
+import Link from 'next/link'; // Thêm dòng này
 
 const PricingTable = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
+  const { isAnnual, toggleBillingPlan } = useBillingPlan();
 
   // Định nghĩa thông tin cho các gói
   const packages = {
     Essential: {
+      slug: 'essential-plan', // Sử dụng slug thay vì id
+      id: '1', // Thêm ID cho gói Essential
       price: { annual: 29, monthly: 35 },
       originalPrice: { annual: 39, monthly: 0 },
       salePrice: { annual: 19, monthly: 33 },
@@ -25,6 +30,8 @@ const PricingTable = () => {
       count: { annual: 60, monthly: 30 },
     },
     Perform: {
+      slug: 'perform-plan', // Sử dụng slug thay vì id
+      id: '2', // Thêm ID cho gói Perform
       price: { annual: 49, monthly: 55 },
       originalPrice: { annual: 59, monthly: 69 },
       salePrice: { annual: 39, monthly: 0 },
@@ -43,6 +50,8 @@ const PricingTable = () => {
       count: { annual: 20, monthly: 55 },
     },
     Enterprise: {
+      slug: 'enterprise-plan', // Sử dụng slug thay vì id
+      id: '3', // Thêm ID cho gói Enterprise
       price: { annual: 79, monthly: 85 },
       originalPrice: { annual: 99, monthly: 109 },
       salePrice: { annual: 69, monthly: 79 },
@@ -101,36 +110,14 @@ const PricingTable = () => {
           </div>
           <div>
             {/* Pricing toggle */}
-            <div>
-              <div className="flex justify-center max-w-[14rem] m-auto mb-8 lg:mb-16">
-                <div className="relative flex w-full p-1 bg-white dark:bg-slate-900 rounded-full">
-                  <span className="absolute inset-0 m-1 pointer-events-none" aria-hidden="true">
-                    <span className={`absolute inset-0 w-1/2 bg-indigo-500 rounded-full shadow-sm shadow-indigo-950/10 transform transition-transform duration-150 ease-in-out ${isAnnual ? 'translate-x-0' : 'translate-x-full'}`}></span>
-                  </span>
-                  <button
-                    className={`relative flex-1 text-base font-medium h-12 rounded-full focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-all duration-150 ease-in-out ${isAnnual ? 'text-white bg-indigo-500' : 'text-slate-500 dark:text-slate-400 hover:bg-indigo-200'}`}
-                    onClick={() => setIsAnnual(true)}
-                    aria-pressed={isAnnual}
-                  >
-                    Monthly <span className={isAnnual ? 'text-indigo-200' : 'text-slate-400 dark:text-slate-500'}>-20%</span>
-                  </button>
-                  <div className="w-2.5"></div> {/* Khoảng cách giữa hai nút */}
-                  <button
-                    className={`relative flex-1 text-base font-medium h-12 rounded-full focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-all duration-150 ease-in-out ${!isAnnual ? 'text-white bg-indigo-500' : 'text-slate-500 dark:text-slate-400 hover:bg-indigo-200'}`}
-                    onClick={() => setIsAnnual(false)}
-                    aria-pressed={!isAnnual}
-                  >
-                    Annual
-                  </button>
-                </div>
-              </div>
-            </div>
+            <PlanSwitch isAnnual={isAnnual} toggleBillingPlan={toggleBillingPlan} /> {/* Thay thế ở đây */}
 
             <div className="max-w-sm mx-auto grid gap-6 lg:grid-cols-3 items-start lg:max-w-none">
-              {/* Pricing tabs */}
+              {/* Pricing cards */}
               {sortedPackages.map((pkg) => (
                 <PricingCard
                   key={pkg.title}
+                  id={pkg.slug} // Chuyển sang slug
                   title={pkg.title}
                   price={isAnnual ? pkg.price.annual : pkg.price.monthly}
                   originalPrice={isAnnual ? pkg.originalPrice.annual : pkg.originalPrice.monthly}
@@ -147,7 +134,7 @@ const PricingTable = () => {
   );
 };
 
-const PricingCard = ({ title, price, originalPrice, includes, mostPopular, isSale }: { title: string; price: number; originalPrice: number; includes: { text: string; icon: string }[]; mostPopular?: boolean; isSale: boolean }) => {
+const PricingCard = ({ id, title, price, originalPrice, includes, mostPopular, isSale }: { id: string; title: string; price: number; originalPrice: number; includes: { text: string; icon: string }[]; mostPopular?: boolean; isSale: boolean }) => {
   return (
     <div className="h-full">
       <div className="relative flex flex-col h-full p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 shadow shadow-slate-950/5">
@@ -165,6 +152,7 @@ const PricingCard = ({ title, price, originalPrice, includes, mostPopular, isSal
             </div>
           </div>
         )}
+
         <div className="mb-5">
           <div className="text-slate-900 dark:text-slate-200 font-semibold mb-1">{title}</div>
           <div className="inline-flex items-baseline mb-2">
@@ -177,9 +165,9 @@ const PricingCard = ({ title, price, originalPrice, includes, mostPopular, isSal
             </div>
           </div>
           <div className="text-sm text-slate-500 mb-5">There are many variations available, but the majority have suffered.</div>
-          <a className="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-colors duration-150" href="#0">
+          <Link className="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-colors duration-150" href={`/Product/${id}`}>
             Purchase Plan
-          </a>
+          </Link>
         </div>
         <div className="text-slate-900 dark:text-slate-200 font-medium mb-3">Includes:</div>
         <ul className="text-slate-600 dark:text-slate-400 text-sm space-y-3 grow">

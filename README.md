@@ -39,3 +39,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Tutorial
 1. https://tailwindflex.com/tag/pricing
 2. https://www.creative-tim.com/twcomponents/components/pricing
+
+
+## TODO
+1. https://tailwindflex.com/@code-huit/order-sumamary
+2. https://tailwindflex.com/@eliteai-tools/payment-successful-notification-page-2
