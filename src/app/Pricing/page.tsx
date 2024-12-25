@@ -1,8 +1,7 @@
 "use client";
-import { useState } from 'react';
-import { useBillingPlan } from './useBillingPlan'; // Đường dẫn đúng tới hook
-import PlanSwitch from './planSwitch'; // Đường dẫn đúng tới PlanSwitch
 import Link from 'next/link'; // Thêm dòng này
+import PlanSwitch from './planSwitch';
+import { useBillingPlan } from './useBillingPlan';
 
 const PricingTable = () => {
   const { isAnnual, toggleBillingPlan } = useBillingPlan();
@@ -96,7 +95,10 @@ const PricingTable = () => {
     return (isAnnual ? b.count.annual : b.count.monthly) - (isAnnual ? a.count.annual : a.count.monthly);
   });
 
+
+
   return (
+
     <div className="relative font-inter antialiased">
       <main className="relative min-h-screen flex flex-col justify-center bg-slate-50 overflow-hidden">
         <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-24">
@@ -165,7 +167,7 @@ const PricingCard = ({ id, title, price, originalPrice, includes, mostPopular, i
             </div>
           </div>
           <div className="text-sm text-slate-500 mb-5">There are many variations available, but the majority have suffered.</div>
-          <Link className="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-colors duration-150" href={`/Product/${id}`}>
+          <Link className="w-full inline-flex justify-center whitespace-nowrap rounded-lg bg-indigo-500 px-3.5 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-950/10 hover:bg-indigo-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 transition-colors duration-150" href={`/product/${id}`}>
             Purchase Plan
           </Link>
         </div>

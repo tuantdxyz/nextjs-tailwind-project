@@ -1,4 +1,4 @@
-import PricingTable from "./Pricing/page";
+import PricingTable from "./pricing/page";
 
 export default function Home() {
   return (
