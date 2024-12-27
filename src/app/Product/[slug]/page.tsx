@@ -1,11 +1,12 @@
-"use client"; // Thêm dòng này để chỉ định đây là Client Component
+"use client"; // Đánh dấu đây là Client Component
 
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { addProduct } from '../../../lib/features/cart/productSlice';
+import { addProduct, selectCart } from '../../../lib/features/cart/productSlice';
 import Head from 'next/head';
 import React from 'react';
-import { toast } from 'react-toastify'; // Import toast từ React Toastify
+import { toast } from 'react-toastify';
 
 interface Product {
   id: string;
@@ -22,22 +23,46 @@ interface Params {
 const products: Product[] = [
   { id: '1', slug: 'essential-plan', name: 'Essential Plan', description: 'Unlock unlimited features with our Essential Plan.', price: 29 },
   { id: '2', slug: 'premium-plan', name: 'Premium Plan', description: 'Get more with our Premium Plan.', price: 49 },
-  { id: '3', slug: 'enterprise-plan', name: 'Enterprise Plan', description: 'All features for enterprises.', price: 79 },
+  { id: '3', slug: 'enterprise-plan', name: 'Enterprise Plan', description: 'All features for enterprises, enterprises plan.', price: 79 },
 ];
 
 const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   const dispatch = useDispatch();
-  const { slug } = React.use(params);
+  const [slug, setSlug] = React.useState<string>('');
+  const cart = useSelector(selectCart); // Chọn giỏ hàng từ Redux Store
+
+  // Lấy slug từ params
+  useEffect(() => {
+    params.then(p => setSlug(p.slug));
+  }, [params]);
+
   const product = products.find(p => p.slug === slug);
+
+  // useEffect(() => {
+  //   // Lưu giỏ hàng vào Local Storage
+  //   localStorage.setItem('cart', JSON.stringify(cart));
+  // }, [cart]);
 
   if (!product) {
     return <h1>Product not found</h1>;
   }
-
+  
   const handleAddToCart = () => {
-    // Dispatch action để thêm sản phẩm vào Redux Store
-    dispatch(addProduct({ ...product, quantity: 1 }));
-    toast.success(`${product.name} was successfully added.`);
+    const existingProduct = cart.items.find(item => item.id === product.id);
+    if (existingProduct) {
+      // Nếu sản phẩm đã có trong giỏ hàng, thông báo cho người dùng
+      toast.info(`${product.name} is already in the cart!`);
+    } else {
+      // Nếu sản phẩm chưa có, thêm vào giỏ hàng
+      dispatch(addProduct({ ...product, quantity: 1 }));
+      toast.success(`${product.name} was successfully added.`);
+    }
+  };
+
+  const handleBuyNow = () => {
+    // Thêm sản phẩm vào giỏ hàng
+    handleAddToCart();
+    // Chuyển hướng đến trang giỏ hàng
   };
 
   return (
@@ -82,7 +107,7 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
                   <span className="text-gray-600 dark:text-gray-300">In Stock</span>
                 </div>
               </div>
-              <Link href="/cart">
+              <Link href="/cart" onClick={handleBuyNow}>
                 <button
                   className="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700"
                 >

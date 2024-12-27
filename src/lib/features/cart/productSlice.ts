@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
+import { toast } from 'react-toastify';
+
 
 interface Product {
   id: string;
+  slug: string;  // Thêm thuộc tính slug
   name: string;
   price: number;
+  description: string;  // Thêm thuộc tính description
   quantity: number;
 }
 
@@ -25,15 +30,23 @@ const productSlice = createSlice({
       const existingProduct = state.items.find(item => item.id === action.payload.id);
       
       if (existingProduct) {
-        // Nếu sản phẩm đã tồn tại, không tăng số lượng mà chỉ có thể hiển thị thông báo
-        // Ví dụ: Có thể thêm một thuộc tính để theo dõi thông báo
-        existingProduct.quantity += 1; // Tăng số lượng mỗi khi thêm vào
+        // Chỉ thêm sản phẩm nếu nó không tồn tại trong giỏ hàng
+        // Nếu sản phẩm đã có trong giỏ hàng, thông báo cho người dùng
+        // toast.info(`${action.payload.name}} is already in the cart!`);
+        return; // Không làm gì nếu sản phẩm đã tồn tại
       } else {
-        // Nếu không, thêm sản phẩm mới vào danh sách
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({ ...action.payload, quantity: 1 }); // Thêm sản phẩm mới với số lượng 1
+        // toast.success(`${action.payload.name} was successfully added.`);
       }
       
-      // Cập nhật tổng số tiền
+      state.totalAmount = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+    },
+    updateProductQuantity(state, action: PayloadAction<{ id: string; quantity: number }>) {
+      const existingProduct = state.items.find(item => item.id === action.payload.id);
+      
+      if (existingProduct) {
+        existingProduct.quantity = action.payload.quantity; // Cập nhật số lượng theo tham số
+      }
       state.totalAmount = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
     },
     removeProduct(state, action: PayloadAction<string>) {
@@ -50,5 +63,8 @@ const productSlice = createSlice({
   },
 });
 
-export const { addProduct, removeProduct, clearCart } = productSlice.actions;
+// Selector để lấy giỏ hàng
+export const selectCart = (state: RootState) => state.cart;
+
+export const { addProduct, updateProductQuantity, removeProduct, clearCart } = productSlice.actions;
 export default productSlice.reducer;
