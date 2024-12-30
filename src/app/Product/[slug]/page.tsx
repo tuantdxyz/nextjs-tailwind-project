@@ -1,12 +1,11 @@
 "use client"; // Đánh dấu đây là Client Component
 
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { addProduct, selectCart } from '../../../lib/features/cart/productSlice';
 import Head from 'next/head';
 import React from 'react';
 import { toast } from 'react-toastify';
+import { useCart } from '../../../lib/features/cart/cartContext';
 
 interface Product {
   id: string;
@@ -27,9 +26,8 @@ const products: Product[] = [
 ];
 
 const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
-  const dispatch = useDispatch();
   const [slug, setSlug] = React.useState<string>('');
-  const cart = useSelector(selectCart); // Chọn giỏ hàng từ Redux Store
+  const { state: cart, dispatch } = useCart(); // Sử dụng Cart Context
 
   // Lấy slug từ params
   useEffect(() => {
@@ -37,11 +35,6 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   }, [params]);
 
   const product = products.find(p => p.slug === slug);
-
-  // useEffect(() => {
-  //   // Lưu giỏ hàng vào Local Storage
-  //   localStorage.setItem('cart', JSON.stringify(cart));
-  // }, [cart]);
 
   if (!product) {
     return <h1>Product not found</h1>;
@@ -54,13 +47,12 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
       toast.info(`${product.name} is already in the cart!`);
     } else {
       // Nếu sản phẩm chưa có, thêm vào giỏ hàng
-      dispatch(addProduct({ ...product, quantity: 1 }));
+      dispatch({ type: 'ADD_PRODUCT', payload: { ...product, quantity: 1 } });
       toast.success(`${product.name} was successfully added.`);
     }
   };
 
   const handleBuyNow = () => {
-    // Thêm sản phẩm vào giỏ hàng
     handleAddToCart();
     // Chuyển hướng đến trang giỏ hàng
   };

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from './providers';
+import { CartProvider } from '../lib/features/cart/cartContext';
 import { ToastContainer } from 'react-toastify';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,20 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={inter.className}>{children}
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar
-            closeOnClick
-            pauseOnHover
-            draggable
-            theme="light"
-          />
-        </body>
-      </html>
-    </Providers>
+      
+        <html lang="en">
+          <body>
+          <CartProvider> {/* Bọc CartProvider quanh children */}
+            {children}
+            </CartProvider>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="light"
+            />
+          </body>
+        </html>
+     
   );
 }

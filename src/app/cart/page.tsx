@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeProduct, selectCart, updateProductQuantity } from '../../lib/features/cart/productSlice';
+import { useCart } from '../../lib/features/cart/cartContext';
 
 interface Product {
   id: string;
@@ -75,8 +74,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onQuantityChange, on
 };
 
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const cart = useSelector(selectCart);
+  const { state: cart, dispatch } = useCart();
   const [subtotal, setSubtotal] = useState<number>(0);
   const [isDiscountCodeVisible, setDiscountCodeVisible] = useState(false);
   const shipping = 0;
@@ -91,12 +89,11 @@ const CartPage = () => {
   };
 
   const removeItem = (id: string) => {
-    dispatch(removeProduct(id));
-    calculateTotals(cart.items.filter(item => item.id !== id));
+    dispatch({ type: 'REMOVE_PRODUCT', payload: id });
   };
 
   const handleQuantityChange = (id: string, quantity: number) => {
-    dispatch(updateProductQuantity({ id, quantity }));
+    dispatch({ type: 'UPDATE_PRODUCT_QUANTITY', payload: { id, quantity } });
   };
 
   const toggleDiscountCode = () => {
@@ -129,40 +126,38 @@ const CartPage = () => {
             <img src="/back.svg" alt="pre" width={20} height={20} className="mr-2" />
             <span className="ml-2">Continue Shopping</span>
           </Link>
-          {/* todo shipping */}
         </div>
 
         {cart.items.length > 0 && (
-          // thông tin shiping
           <div className="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-md mt-4">
             <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Summary</h2>
             <label className="font-sans txt-compact-medium font-normal flex gap-x-1 my-2 items-center">
-  <button
-    type="button"
-    className="txt-medium text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
-    onClick={toggleDiscountCode}
-  >
-    Add gift card or discount code
-  </button>
-  <img src="/quanlity_add.svg" alt="Info Icon" width={20} height={20} />
-</label>
-{isDiscountCodeVisible && (
-  <div className="w-full bg-white flex items-center p-4 rounded-lg shadow-md mt-1"> {/* Giảm mt-4 thành mt-1 */}
-    <input
-      placeholder="Discount code"
-      className="h-10 w-2/3 px-4 border rounded-md appearance-none focus:outline-none focus:ring-0"
-      type="text"
-      name="discountCode"
-    />
-    <button
-      type="button"
-      onClick={() => { /* Logic to handle discount code here */ }}
-      className="bg-gray-800 text-white px-4 py-2 rounded-md ml-2 h-10"
-    >
-      Apply
-    </button>
-  </div>
-)}
+              <button
+                type="button"
+                className="txt-medium text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
+                onClick={toggleDiscountCode}
+              >
+                Add gift card or discount code
+              </button>
+              <img src="/quanlity_add.svg" alt="Info Icon" width={20} height={20} />
+            </label>
+            {isDiscountCodeVisible && (
+              <div className="w-full bg-white flex items-center p-4 rounded-lg shadow-md mt-1">
+                <input
+                  placeholder="Discount code"
+                  className="h-10 w-2/3 px-4 border rounded-md appearance-none focus:outline-none focus:ring-0"
+                  type="text"
+                  name="discountCode"
+                />
+                <button
+                  type="button"
+                  onClick={() => { /* Logic to handle discount code here */ }}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-md ml-2 h-10"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
 
             <div className="h-px w-full border-b border-gray-200 mt-1"></div>
             <div className="flex justify-between mt-4">
