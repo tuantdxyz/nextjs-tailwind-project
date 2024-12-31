@@ -1,5 +1,5 @@
 // CartContext.tsx
-"use client"; 
+"use client";
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
@@ -8,7 +8,8 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  description: string;
+  shortDescription: string;
+  detailedDescription: string;
   quantity: number;
 }
 
@@ -42,7 +43,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const updatedTotalAmount = updatedItems.reduce((total, item) => total + item.price * item.quantity, 0);
       return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
-    
+
     case 'UPDATE_PRODUCT_QUANTITY': {
       const updatedItems = state.items.map(item =>
         item.id === action.payload.id ? { ...item, quantity: action.payload.quantity } : item
@@ -50,13 +51,13 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const updatedTotalAmount = updatedItems.reduce((total, item) => total + item.price * item.quantity, 0);
       return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
-    
+
     case 'REMOVE_PRODUCT': {
       const updatedItems = state.items.filter(item => item.id !== action.payload);
       const updatedTotalAmount = updatedItems.reduce((total, item) => total + item.price * item.quantity, 0);
       return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
-    
+
     case 'CLEAR_CART':
       return initialState;
 

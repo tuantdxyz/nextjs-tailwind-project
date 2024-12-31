@@ -12,7 +12,8 @@ interface Product {
   slug: string;
   name: string;
   price: number;
-  description: string;
+  shortDescription: string;
+  detailedDescription: string;
 }
 
 interface Params {
@@ -20,16 +21,36 @@ interface Params {
 }
 
 const products: Product[] = [
-  { id: '1', slug: 'essential-plan', name: 'Essential Plan', description: 'Unlock unlimited features with our Essential Plan.', price: 29 },
-  { id: '2', slug: 'premium-plan', name: 'Premium Plan', description: 'Get more with our Premium Plan.', price: 49 },
-  { id: '3', slug: 'enterprise-plan', name: 'Enterprise Plan', description: 'All features for enterprises, enterprises plan.', price: 79 },
+  {
+    id: '1',
+    slug: 'essential-plan',
+    name: 'Essential Plan',
+    shortDescription: 'Unlock unlimited features with our Essential Plan.',
+    detailedDescription: 'Unlock unlimited features with our Essential Plan, including premium support and access to new features as they are released.',
+    price: 29
+  },
+  {
+    id: '2',
+    slug: 'premium-plan',
+    name: 'Premium Plan',
+    shortDescription: 'Get more with our Premium Plan.',
+    detailedDescription: 'The Premium Plan provides additional storage and advanced analytics tools for your business needs.',
+    price: 49
+  },
+  {
+    id: '3',
+    slug: 'enterprise-plan',
+    name: 'Enterprise Plan',
+    shortDescription: 'All features for enterprises, enterprises plan.',
+    detailedDescription: 'The Enterprise Plan includes all features and custom solutions tailored specifically for large organizations.',
+    price: 79
+  },
 ];
 
 const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   const [slug, setSlug] = React.useState<string>('');
-  const { state: cart, dispatch } = useCart(); // Sử dụng Cart Context
+  const { state: cart, dispatch } = useCart();
 
-  // Lấy slug từ params
   useEffect(() => {
     params.then(p => setSlug(p.slug));
   }, [params]);
@@ -39,14 +60,12 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   if (!product) {
     return <h1>Product not found</h1>;
   }
-  
+
   const handleAddToCart = () => {
     const existingProduct = cart.items.find(item => item.id === product.id);
     if (existingProduct) {
-      // Nếu sản phẩm đã có trong giỏ hàng, thông báo cho người dùng
       toast.info(`${product.name} is already in the cart!`);
     } else {
-      // Nếu sản phẩm chưa có, thêm vào giỏ hàng
       dispatch({ type: 'ADD_PRODUCT', payload: { ...product, quantity: 1 } });
       toast.success(`${product.name} was successfully added.`);
     }
@@ -59,10 +78,10 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>{product.name}</title>
-        <meta name="description" content={product.description} />
-      </Head>
+        <meta name="description" content={product.shortDescription} />
+      </Head> */}
       <div className="bg-gray-100 dark:bg-gray-800 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row -mx-4">
@@ -72,7 +91,7 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
               </div>
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/2 px-2">
-                  <button 
+                  <button
                     onClick={handleAddToCart}
                     className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
                   >
@@ -88,7 +107,7 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
             </div>
             <div className="md:flex-1 px-4">
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{product.name}</h2>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{product.description}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{product.shortDescription}</p>
               <div className="flex mb-4">
                 <div className="mr-4">
                   <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
@@ -107,10 +126,15 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
                   Buy now
                 </button>
               </Link>
-              <div>
+              <div className="mt-6">
                 <span className="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">{product.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">{product.detailedDescription}</p>
               </div>
+              <div className="mt-6 border-t max-w-sm mx-auto w-full"></div>
+              <Link href="/" className="flex items-center font-semibold text-blue-600 text-sm mt-4">
+                <img src="/back.svg" alt="Back" width={20} height={20} className="mr-2" />
+                <span className="ml-2">Continue Shopping</span>
+              </Link>
             </div>
           </div>
         </div>
