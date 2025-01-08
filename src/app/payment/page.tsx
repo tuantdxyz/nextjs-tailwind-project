@@ -28,9 +28,9 @@ const PaymentPage: React.FC = () => {
         }
     }, [paymentStatus]);
 
-    const handleDiscountApply = () => {
-        // Thêm logic xử lý mã giảm giá nếu cần
-    };
+    // const handleDiscountApply = () => {
+    //     // Thêm logic xử lý mã giảm giá nếu cần
+    // };
 
     const totalAmount = cart.items.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
