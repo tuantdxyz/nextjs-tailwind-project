@@ -15,11 +15,11 @@ const handler = NextAuth({
     signIn: '/auth/signin',  // Tùy chỉnh trang đăng nhập
     error: '/auth/error'      // Tùy chỉnh trang lỗi
   },
-  session: {
-    strategy: 'jwt',          // Sử dụng JWT cho session
-    maxAge: 10,               // Thời gian sống của session (1 phút)
-    updateAge: 10,            // Cập nhật session mỗi 30 giây
-  },
+  // session: {
+  //   strategy: 'jwt',          // Sử dụng JWT cho session
+  //   maxAge: 10,               // Thời gian sống của session (1 phút)
+  //   updateAge: 10,            // Cập nhật session mỗi 30 giây
+  // },
 });
 
 // In giá trị clientId ra console

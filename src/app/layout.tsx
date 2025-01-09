@@ -7,6 +7,7 @@ import "./globals.css"; // Nhập file CSS toàn cục
 import { CartProvider } from '../lib/features/cart/cartContext'; // Nhập CartProvider
 import { ToastContainer } from 'react-toastify'; // Nhập ToastContainer
 import SessionProviderClientComponent from "./sessionProviderClientComponent";
+import Navbar from '../components/navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body>
         <SessionProviderClientComponent session={session}> {/* Bọc children trong SessionProviderClientComponent */}
           <CartProvider> {/* Bọc CartProvider quanh children */}
+          <Navbar />
             {children}
           </CartProvider>
           <ToastContainer

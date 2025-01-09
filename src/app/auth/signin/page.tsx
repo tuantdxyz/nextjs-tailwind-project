@@ -52,29 +52,25 @@ export default function SignInPage() {
               <button
                 type="button"
                 onClick={handleFacebookSignIn}
-                className="mx-1 inline-block h-9 w-9 rounded-full bg-blue-600 text-white p-2 uppercase leading-normal shadow transition duration-150 ease-in-out hover:bg-blue-700"
+                className="mx-1 inline-flex items-center justify-center h-9 w-9 rounded-full text-white transition-transform duration-200 ease-in-out transform hover:scale-125"
                 aria-label="Sign in with Facebook"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="h-4 w-4">
-                  <path d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
-                </svg>
+                <img src="/facebook_login.svg" alt="Facebook" width={20} height={20} />
               </button>
 
               {/* Google Button */}
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="mx-1 inline-block h-9 w-9 rounded-full bg-red-600 text-white p-2 uppercase leading-normal shadow transition duration-150 ease-in-out hover:bg-red-700"
+                className="mx-1 inline-flex items-center justify-center h-9 w-9 rounded-full text-white transition-transform duration-200 ease-in-out transform hover:scale-125"
                 aria-label="Sign in with Google"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" className="h-4 w-4">
-                  <path d="M488 262.3c0-14.6-1.3-28.8-3.7-42.4H244v81.4h131c-5.6 28-21.6 51.6-47.6 66.4v54.8h76.5c45.1-41.6 70.1-102.4 70.1-159.8z" />
-                </svg>
+                <img src="/google_login.svg" alt="Google" width={20} height={20} />
               </button>
             </div>
 
             <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-              <p className="mx-4 mb-0 text-center font-semibold">Or</p>
+              <p className="mx-4 mb-0 text-center font-semibold">Ghi Chú</p>
             </div>
 
             {/* Email input (optional) */}
