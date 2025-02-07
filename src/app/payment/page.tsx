@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '../../lib/features/cart/cartContext';
+import StepOrderProcess from '../../components/stepOrderProcess';
 
 const PaymentPage: React.FC = () => {
     const { state: cart } = useCart();
     const [paymentStatus, setPaymentStatus] = useState<'Unpaid' | 'Paid' | 'Cancelled'>('Unpaid');
-    const [timeRemaining, setTimeRemaining] = useState(300); // 10 giây
+    const [timeRemaining, setTimeRemaining] = useState(10); // 10 giây
     const [loading, setLoading] = useState(false);
     const QRCodeImage = '/QRCodePayment.png'; // Đường dẫn đến ảnh QRCode
 
@@ -18,7 +19,8 @@ const PaymentPage: React.FC = () => {
                 setTimeRemaining((prev) => {
                     if (prev <= 1) {
                         clearInterval(timer);
-                        setPaymentStatus('Cancelled');
+                        // setPaymentStatus('Cancelled');
+                        setPaymentStatus('Paid');    //test thanh toan thanh cong
                         return 0;
                     }
                     return prev - 1;
@@ -28,10 +30,6 @@ const PaymentPage: React.FC = () => {
         }
     }, [paymentStatus]);
 
-    // const handleDiscountApply = () => {
-    //     // Thêm logic xử lý mã giảm giá nếu cần
-    // };
-
     const totalAmount = cart.items.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
     return (
@@ -39,12 +37,15 @@ const PaymentPage: React.FC = () => {
             <div className="w-full max-w-2xl p-4 bg-white shadow-2xl dark:bg-gray-900 sm:p-10 sm:rounded-3xl">
                 <form className="text-center" onSubmit={(e) => e.preventDefault()}>
                     <h1 className="text-4xl font-extrabold text-green-700 dark:text-green-400">Thông tin đặt hàng</h1>
+
+                    {/* Steps for Order Process */}
+                    <StepOrderProcess currentStep={1} paymentStatus={paymentStatus} />
+
                     <h2 className="mt-4 text-lg text-gray-800 dark:text-gray-300">Sản phẩm: {cart.items.map(item => item.name).join(', ')}</h2>
                     <p className="mt-2 text-lg text-gray-800 dark:text-gray-300">Tổng giá: ${totalAmount.toFixed(2)}</p>
 
                     {paymentStatus === 'Unpaid' && (
                         <div className="mt-6 ">
-                            {/* <Image src={QRCodeImage} alt="QR Code" width={300} height={300} /> */}
                             <img src="QRCodePayment.png" alt="QR Code" className="mx-auto w-300 h-300" />
                             <h2 className="mt-4 text-lg text-gray-800 dark:text-gray-300">Vui lòng quét mã QR để thanh toán</h2>
                             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Hệ thống đang chờ xác nhận thanh toán của bạn.</p>
