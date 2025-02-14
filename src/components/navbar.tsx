@@ -31,7 +31,7 @@ const Navbar = () => {
             <div className={`toggle ${isMenuOpen ? 'flex-col items-start' : 'hidden'} w-full md:w-auto md:flex text-center md:text-center mt-5 md:mt-0`}>
                 <Link href="/" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Home</Link>
                 <Link href="/services" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Services</Link>
-                <Link href="#" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Products</Link>
+                <Link href="/product" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Products</Link>
                 <Link href="#" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Noti</Link>
 
                 {/* Hiển thị thông tin người dùng trong menu toggle */}
