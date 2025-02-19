@@ -1,78 +1,94 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import CartIcon from './cartIcon';
+import { useState } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import CartIcon from "./cartIcon";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { data: session } = useSession(); // Lấy session từ next-auth
+    const { data: session } = useSession();
 
-    const toggleMenu = () => {
-        setIsMenuOpen(prev => !prev);
-    };
-
-    const closeMenu = () => {
-        setIsMenuOpen(false);
-    };
+    const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+    const closeMenu = () => setIsMenuOpen(false);
 
     return (
-        <nav className="fixed top-0 left-0 right-0 flex flex-wrap items-center justify-between p-4 bg-gray-200 z-10">
-            <img src="/akrapovic.svg" className="h-10 w-10" alt="Logo" />
-            <div className="flex md:hidden ml-auto">
-                <button id="hamburger" onClick={toggleMenu}>
-                    <img className="toggle block"
-                        src={isMenuOpen ? "https://img.icons8.com/fluent-systems-regular/2x/close-window.png" : "https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png"}
-                        width="48" height="48"
-                        alt={isMenuOpen ? "Close" : "Menu"}
-                    />
-                </button>
-            </div>
+        <>
+            {/* 🌟 Navbar trên cùng dành cho Desktop */}
+            <nav className="hidden md:flex fixed top-0 left-0 right-0 bg-white shadow-md border-b border-gray-300 z-50">
+                <div className="container mx-auto flex justify-between items-center px-6 py-3">
+                    <img src="/akrapovic.svg" className="h-10" alt="Logo" />
 
-            <div className={`toggle ${isMenuOpen ? 'flex-col items-start' : 'hidden'} w-full md:w-auto md:flex text-center md:text-center mt-5 md:mt-0`}>
-                <Link href="/" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Home</Link>
-                <Link href="/services" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Services</Link>
-                <Link href="/product" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Products</Link>
-                <Link href="#" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Noti</Link>
-
-                {/* Hiển thị thông tin người dùng trong menu toggle */}
-                {isMenuOpen && session && session.user && (
-                    <div className="flex items-center justify-center mt-4">
-                        <img src={`${session.user.image}`} alt="User Icon" className="h-8 w-8 rounded-full mr-2" />
-                        <span className="text-teal-900">{session.user.name}</span>
-                        {/* Thêm biểu tượng giỏ hàng */}
-                        <CartIcon />
+                    {/* Menu Desktop */}
+                    <div className="flex space-x-6">
+                        <Link href="/" className="text-gray-800 font-medium hover:text-black transition">Home</Link>
+                        <Link href="/services" className="text-gray-800 font-medium hover:text-black transition">Services</Link>
+                        <Link href="/product" className="text-gray-800 font-medium hover:text-black transition">Products</Link>
+                        <Link href="#" className="text-gray-800 font-medium hover:text-black transition">Noti</Link>
                     </div>
-                )}
 
-                {/* Nút Login trong Mobile Menu */}
-                {!session && isMenuOpen && (
-                    <div className="w-full mt-4 flex justify-center">
-                        <Link href="/auth/signin" className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]" onClick={closeMenu}>
+                    {/* Hiển thị user / login */}
+                    {session && session.user ? (
+                        <div className="flex items-center space-x-3">
+                            <img src={session.user.image} alt="User Icon" className="h-8 w-8 rounded-full" />
+                            <span className="text-gray-900">{session.user.name}</span>
+                            <CartIcon />
+                        </div>
+                    ) : (
+                        <Link href="/auth/signin" className="bg-green-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-500 transition">
                             Login
                         </Link>
-                        {/* Thêm biểu tượng giỏ hàng */}
-                        <CartIcon />
-                    </div>
-                )}
-            </div>
-            <div> <div className="hidden md:flex md:ml-auto items-center">
-                {session && session.user ? (
-                    <div className="flex items-center">
-                        <img src={`${session.user.image}`} alt="User Icon" className="h-8 w-8 rounded-full mr-2" />
-                        <span className="text-teal-900">{session.user.name}</span>
-                        {/* Thêm biểu tượng giỏ hàng */}
-                        <CartIcon />
-                    </div>
-                ) : (
-                    <Link href="/auth/signin" className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
-                        Login
-                    </Link>
-                )}
-            </div></div>
+                    )}
+                </div>
+            </nav>
 
-        </nav>
+            {/* 📌 Navbar dưới dành cho Mobile */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-md border-t border-gray-300 z-50">
+                <div className="flex justify-around items-center p-3">
+                    <Link href="/" className="flex flex-col items-center text-gray-700 hover:text-black">
+                        <img src="/home.svg" className="w-6 h-6" alt="Home" />
+                        <span className="text-xs">Home</span>
+                    </Link>
+
+                    <Link href="/services" className="flex flex-col items-center text-gray-700 hover:text-black">
+                        <img src="services.svg" className="w-6 h-6" alt="Services" />
+                        <span className="text-xs">Services</span>
+                    </Link>
+
+                    <Link href="/product" className="flex flex-col items-center text-gray-700 hover:text-black">
+                        <img src="/products.svg" className="w-6 h-6" alt="Products" />
+                        <span className="text-xs">Products</span>
+                    </Link>
+
+                    <Link href="#" className="flex flex-col items-center text-gray-700 hover:text-black">
+                        <img src="/notification.svg" className="w-6 h-6" alt="Notifications" />
+                        <span className="text-xs">Noti</span>
+                    </Link>
+
+                    <CartIcon />
+                </div>
+            </nav>
+
+            {/* 📌 Menu mở rộng (ẩn/hiện) */}
+            {isMenuOpen && (
+                <div className="absolute bottom-12 left-0 w-full bg-white p-4 shadow-md rounded-t-lg transition-all duration-300 ease-in-out md:hidden">
+                    {session && session.user ? (
+                        <div className="flex items-center justify-between">
+                            <img src={session.user.image} alt="User Icon" className="h-8 w-8 rounded-full" />
+                            <span className="text-gray-800">{session.user.name}</span>
+                        </div>
+                    ) : (
+                        <Link
+                            href="/auth/signin"
+                            className="block text-center bg-green-600 text-white rounded-md px-4 py-2 mt-2"
+                            onClick={closeMenu}
+                        >
+                            Login
+                        </Link>
+                    )}
+                </div>
+            )}
+        </>
     );
 };
 

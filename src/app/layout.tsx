@@ -1,5 +1,3 @@
-// src/app/layout.tsx
-
 import { getServerSession } from "next-auth"; // Nhập phương thức lấy session
 import { Metadata } from "next"; // Nhập type Metadata
 import { Inter } from "next/font/google"; // Nhập font Google
@@ -26,11 +24,13 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className="relative min-h-screen pt-16 pb-16"> 
+        {/* ✅ Thêm class `pb-16` để tránh navbar che nội dung */}
+        
         <SessionProviderClientComponent session={session}> {/* Bọc children trong SessionProviderClientComponent */}
           <CartProvider> {/* Bọc CartProvider quanh children */}
-          <Navbar />
-            {children}
+            <Navbar />
+            <main className="max-w-screen-lg mx-auto">{children}</main>
           </CartProvider>
           <ToastContainer
             position="top-right"
