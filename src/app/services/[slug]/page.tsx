@@ -14,6 +14,7 @@ interface Product {
   price: number;
   shortDescription: string;
   detailedDescription: string;
+  imageSrc: string;
 }
 
 const products: Product[] = [
@@ -23,7 +24,8 @@ const products: Product[] = [
     name: 'Essential Plan',
     shortDescription: 'Unlock unlimited features with our Essential Plan.',
     detailedDescription: 'Unlock unlimited features with our Essential Plan, including premium support and access to new features as they are released.',
-    price: 29
+    price: 29,
+    imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
   },
   {
     id: '2',
@@ -31,7 +33,8 @@ const products: Product[] = [
     name: 'Premium Plan',
     shortDescription: 'Get more with our Premium Plan.',
     detailedDescription: 'The Premium Plan provides additional storage and advanced analytics tools for your business needs.',
-    price: 49
+    price: 49,
+    imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
   },
   {
     id: '3',
@@ -39,7 +42,8 @@ const products: Product[] = [
     name: 'Enterprise Plan',
     shortDescription: 'All features for enterprises, enterprises plan.',
     detailedDescription: 'The Enterprise Plan includes all features and custom solutions tailored specifically for large organizations.',
-    price: 79
+    price: 79,
+    imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
   },
 ];
 

@@ -13,6 +13,7 @@ interface Product {
   shortDescription: string;
   detailedDescription: string;
   quantity: number;
+  imageSrc: string; // Thêm thuộc tính imageSrc để lưu trữ URL ảnh sản phẩm
 }
 
 interface ProductCardProps {
@@ -24,13 +25,16 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onQuantityChange, onRemove }) => {
   return (
     <div className="mb-6 rounded-lg bg-white p-6 shadow-md flex flex-col sm:flex-row sm:justify-between">
-      <img
-        src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
-        alt="Product"
-        className="w-full rounded-lg sm:w-40"
-      />
+      {/* Hiển thị ảnh sản phẩm */}
+      <div className="flex justify-center items-center w-40 h-40 sm:w-40 sm:h-40 overflow-hidden rounded-lg bg-gray-100">
+        <img
+          src={product.imageSrc}
+          alt={product.name}
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
       <div className="flex flex-col sm:ml-4 sm:w-full">
-        <div className="mt-5">
+        <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold text-gray-900">{product.name}</h2>
           <p className="mt-1 text-xs text-gray-700">{product.shortDescription}</p>
           <p className="mt-1 text-lg font-bold">Price: ${product.price.toFixed(2)}</p>
@@ -162,7 +166,7 @@ const CartPage: React.FC = () => {
             {['Name', 'Email', 'Address', 'City', 'State', 'ZIP'].map((label, index) => (
               <label key={index} className="flex border-b border-gray-200 h-12 py-3 items-center">
                 <span className="text-right px-2">{label}</span>
-                <input name={label.toLowerCase()} className="focus:outline-none px-3" placeholder={`Enter ${label}`} required />
+                <input name={label.toLowerCase()} className="focus:outline-none px-3 w-full" placeholder={`Enter ${label}`} required />
               </label>
             ))}
             <label className="flex border-t border-gray-200 h-12 py-3 items-center select relative">

@@ -7,7 +7,8 @@ import { useCart } from '../../lib/features/cart/cartContext';
 import StepOrderProcess from '../../components/stepOrderProcess';
 
 const PaymentPage: React.FC = () => {
-    const { state: cart } = useCart();
+    // const { state: cart } = useCart();
+    const { state: cart, dispatch } = useCart();
     const [paymentStatus, setPaymentStatus] = useState<'Unpaid' | 'Paid' | 'Cancelled'>('Unpaid');
     const [timeRemaining, setTimeRemaining] = useState(10); // 10 giây
     const [loading, setLoading] = useState(false);
@@ -29,6 +30,12 @@ const PaymentPage: React.FC = () => {
             return () => clearInterval(timer);
         }
     }, [paymentStatus]);
+
+    useEffect(() => {
+        if (paymentStatus === 'Paid') {
+            dispatch({ type: 'CLEAR_CART' });
+        }
+    }, [paymentStatus, dispatch]);
 
     const totalAmount = cart.items.reduce((acc, product) => acc + product.price * product.quantity, 0);
 

@@ -27,6 +27,7 @@ const PricingTable = () => {
       saleStartDate: new Date('2023-12-01'),
       saleEndDate: new Date('2024-12-25'),
       count: { annual: 60, monthly: 30 },
+      imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
     },
     Perform: {
       slug: 'perform-plan', // Sử dụng slug thay vì id
@@ -47,6 +48,7 @@ const PricingTable = () => {
       saleStartDate: new Date('2023-12-01'),
       saleEndDate: new Date('2024-01-01'),
       count: { annual: 20, monthly: 55 },
+      imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
     },
     Enterprise: {
       slug: 'enterprise-plan', // Sử dụng slug thay vì id
@@ -67,6 +69,7 @@ const PricingTable = () => {
       saleStartDate: new Date('2023-12-01'),
       saleEndDate: new Date('2024-01-01'),
       count: { annual: 75, monthly: 10 },
+      imageSrc: 'https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg'
     },
   };
 

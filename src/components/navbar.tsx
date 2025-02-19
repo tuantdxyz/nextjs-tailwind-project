@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 "use client";
 
 import { useState } from 'react';
@@ -14,6 +13,10 @@ const Navbar = () => {
         setIsMenuOpen(prev => !prev);
     };
 
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
         <nav className="fixed top-0 left-0 right-0 flex flex-wrap items-center justify-between p-4 bg-gray-200 z-10">
             <img src="/akrapovic.svg" className="h-10 w-10" alt="Logo" />
@@ -27,12 +30,11 @@ const Navbar = () => {
                 </button>
             </div>
 
-
             <div className={`toggle ${isMenuOpen ? 'flex-col items-start' : 'hidden'} w-full md:w-auto md:flex text-center md:text-center mt-5 md:mt-0`}>
-                <Link href="/" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Home</Link>
-                <Link href="/services" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Services</Link>
-                <Link href="/product" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Products</Link>
-                <Link href="#" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105">Noti</Link>
+                <Link href="/" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Home</Link>
+                <Link href="/services" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Services</Link>
+                <Link href="/product" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Products</Link>
+                <Link href="#" className="block text-teal-900 font-bold hover:text-teal-500 text-xl px-3 py-4 border-b-2 border-teal-900 md:border-none transition duration-200 ease-in-out hover:scale-105" onClick={closeMenu}>Noti</Link>
 
                 {/* Hiển thị thông tin người dùng trong menu toggle */}
                 {isMenuOpen && session && session.user && (
@@ -47,7 +49,7 @@ const Navbar = () => {
                 {/* Nút Login trong Mobile Menu */}
                 {!session && isMenuOpen && (
                     <div className="w-full mt-4 flex justify-center">
-                        <Link href="/auth/signin" className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                        <Link href="/auth/signin" className="rounded-md bg-gradient-to-br from-green-600 to-emerald-400 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]" onClick={closeMenu}>
                             Login
                         </Link>
                         {/* Thêm biểu tượng giỏ hàng */}

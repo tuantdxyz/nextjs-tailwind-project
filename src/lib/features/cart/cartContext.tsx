@@ -11,6 +11,7 @@ interface Product {
   shortDescription: string;
   detailedDescription: string;
   quantity: number;
+  imageSrc: string; 
 }
 
 interface CartState {
