@@ -34,8 +34,34 @@ const PaymentPage: React.FC = () => {
     useEffect(() => {
         if (paymentStatus === 'Paid') {
             dispatch({ type: 'CLEAR_CART' });
+            sendTelegramMessage('Payment was successful!');
         }
     }, [paymentStatus, dispatch]);
+
+    const sendTelegramMessage = async (message: string) => {
+        const telegramToken = '7235863312:AAHR-hBFTsVGmPNK9SaBH5XFyEdJcE9utnc';
+        const chatId = '6684388726';
+        const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Message sent to Telegram');
+        } catch (error) {
+            console.error('Error sending message to Telegram:', error);
+        }
+    };
 
     const totalAmount = cart.items.reduce((acc, product) => acc + product.price * product.quantity, 0);
 

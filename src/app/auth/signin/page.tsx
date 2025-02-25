@@ -1,4 +1,4 @@
-"use client"; // Đánh dấu file này là Client Component
+"use client";
 
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -73,58 +73,9 @@ export default function SignInPage() {
               <p className="mx-4 mb-0 text-center font-semibold">Ghi Chú</p>
             </div>
 
-            {/* Email input (optional) */}
-            {/* <div className="relative mb-6">
-              <input
-                type="text"
-                className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary"
-                id="exampleFormControlInput2"
-                placeholder="Email address"
-              />
-              <label
-                htmlFor="exampleFormControlInput2"
-                className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary"
-              >
-                Email address
-              </label>
-            </div> */}
-
-            {/* Password input (optional) */}
-            {/* <div className="relative mb-6">
-              <input
-                type="password"
-                className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary"
-                id="exampleFormControlInput22"
-                placeholder="Password"
-              />
-              <label
-                htmlFor="exampleFormControlInput22"
-                className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary"
-              >
-                Password
-              </label>
-            </div> */}
-
             <div className="mb-6 flex items-center justify-between">
-              <a href="#!">Forgot password?</a>
+              <Link href="#!">Forgot password?</Link>
             </div>
-
-            {/* Login button (optional) */}
-            {/* <div className="text-center lg:text-left">
-              <button
-                type="button"
-                className="inline-block w-full rounded bg-primary px-7 pb-2 pt-3 text-sm font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-accent-300"
-              >
-                Login
-              </button>
-
-              <p className="mb-0 mt-2 pt-1 text-sm font-semibold">
-                Don't have an account?
-                <Link href="#!" className="text-danger transition duration-150 ease-in-out hover:text-danger-600">
-                  Register
-                </Link>
-              </p>
-            </div> */}
           </form>
         </div>
       </div>

@@ -23,6 +23,7 @@ export function middleware(request: NextRequest) {
 }
 
 // Cấu hình các route mà middleware sẽ áp dụng
+// TODO
 export const config = {
     matcher: ['/dashboard/:path*', '/product/:path*', '/auth/:path*'],
 };

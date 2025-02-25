@@ -13,15 +13,15 @@ export default function Home() {
       {/* HomeSlide component */}
       <HomeSlide />
       {/* Import ProcessInto component */}
-      <ProcessInto />
+      {/* <ProcessInto /> */}
       {/* Import TopSellersSection component */}
-      <TopSellersSection />
+      {/* <TopSellersSection /> */}
       {/* Import FeaturesSection component */}
-      <FeaturesSection />
+      {/* <FeaturesSection /> */}
       {/* Import PromotionsSection component */}
-      <PromotionsSection />
+      {/* <PromotionsSection /> */}
       {/* Import ReviewsSection component */}
-      <ReviewsSection />
+      {/* <ReviewsSection /> */}
     </div>
   );
 }
