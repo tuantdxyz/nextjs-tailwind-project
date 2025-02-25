@@ -1,5 +1,3 @@
-// src/middleware.ts
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -8,6 +6,8 @@ export function middleware(request: NextRequest) {
     const isAuthPage = request.nextUrl.pathname.startsWith('/auth'); // Kiểm tra nếu là trang xác thực
 
     console.log("Token:", token); // Ghi log token để kiểm tra
+    const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+    console.log("NEXTAUTH_URL:", NEXTAUTH_URL);
 
     // Nếu không có token và không phải trang xác thực, chuyển hướng đến trang đăng nhập
     if (!token && !isAuthPage) {
@@ -23,7 +23,6 @@ export function middleware(request: NextRequest) {
 }
 
 // Cấu hình các route mà middleware sẽ áp dụng
-// TODO
 export const config = {
-    matcher: ['/dashboard/:path*', '/product/:path*', '/auth/:path*'],
+    matcher: ['/dashboard/:path*', '/product/:path*', '/notifications', '/auth/:path*'],
 };

@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/*
+  Nó sẽ đồng bộ DB, không có khai báo trong này sẽ bị xóa
+  npm install dotenv-cli --save-dev
+  npx dotenv -e .env.local -- npx prisma db push
+*/
+
+model Book {
+  id    Int    @id @default(autoincrement())
+  title String
+}
+
+model Department {
+  id        Int        @id @default(autoincrement())
+  name      String
+  employees Employee[]
+}
+
+model Employee {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String      @unique
+  departmentId Int
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+}
