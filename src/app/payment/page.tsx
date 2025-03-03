@@ -39,9 +39,10 @@ const PaymentPage: React.FC = () => {
     }, [paymentStatus, dispatch]);
 
     const sendTelegramMessage = async (message: string) => {
-        const telegramToken = '7235863312:AAHR-hBFTsVGmPNK9SaBH5XFyEdJcE9utnc';
-        const chatId = '6684388726';
+        const telegramToken = process.env.TELEGRAM_TOKEN_BOT;
+        const chatId = process.env.TELEGRAM_CHAT_ID;
         const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
+        // const url = process.env.TELEGRAM_GROUP_URL;
 
         try {
             const response = await fetch(url, {

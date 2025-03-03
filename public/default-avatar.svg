@@ -1,0 +1,12 @@
+<svg 
+    version="1.1" 
+    id="Layer_1" 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    viewBox="0 0 64 64" 
+    enable-background="new 0 0 64 64" 
+    xml:space="preserve"
+>
+    <circle fill="#B0BEC5" cx="32" cy="32" r="32"/>
+    <path fill="#FFFFFF" d="M32 34c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12-5.373 12-12 12zM46 50.5c0-7.732-6.268-14-14-14s-14 6.268-14 14V54h28V50.5z"/>
+</svg>
