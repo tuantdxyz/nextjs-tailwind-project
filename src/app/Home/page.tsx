@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import HomeSlide from '../../components/homeSlide';
 import ProcessInto from '../../components/processInto';
+import HotDeal from '../../components/hotDeal';
 import FeaturesSection from '../../components/featuresSection';
 import ReviewsSection from '../../components/reviewsSection';
 import TopSellersSection from '../../components/topSellersSection';
@@ -13,14 +14,14 @@ export default function Home() {
       {/* HomeSlide component */}
       <HomeSlide />
       {/* Import ProcessInto component */}
-      {/* <ProcessInto /> */}
+      <ProcessInto />
+      {/* Import ReviewsSection component */}
+      <PromotionsSection />
       {/* Import TopSellersSection component */}
       {/* <TopSellersSection /> */}
       {/* Import FeaturesSection component */}
       {/* <FeaturesSection /> */}
       {/* Import PromotionsSection component */}
-      {/* <PromotionsSection /> */}
-      {/* Import ReviewsSection component */}
       {/* <ReviewsSection /> */}
     </div>
   );

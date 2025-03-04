@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    domains: ["lh3.googleusercontent.com", "mdbcdn.b-cdn.net"],
   },
   i18n: {
     locales: ["en", "vi"], // ✅ Định nghĩa các ngôn ngữ hỗ trợ
