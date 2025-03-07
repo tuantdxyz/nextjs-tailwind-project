@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "../lib/features/cart/cartContext";
+import { PromotionProvider } from "../lib/features/promotion/promotionContext";
 import { ToastContainer } from "react-toastify";
 import SessionProviderClientComponent from "./sessionProviderClientComponent";
 import Navbar from "../components/navbar";
@@ -28,8 +29,10 @@ export default async function RootLayout({
         <SessionProviderClientComponent session={session}>
           <I18nProvider> {/* 💥 Thêm Provider */}
             <CartProvider>
+            <PromotionProvider>
               <Navbar />
               <main className="max-w-screen-lg mx-auto">{children}</main>
+              </PromotionProvider>
             </CartProvider>
             <ToastContainer
               position="top-right"
