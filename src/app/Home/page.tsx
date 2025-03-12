@@ -12,13 +12,13 @@ export default function Home() {
   return (
     <div>
       {/* HomeSlide component */}
-      {/* <HomeSlide /> */}
+      <HomeSlide />
       {/* Import ProcessInto component */}
       <ProcessInto />
       {/* Import ReviewsSection component */}
-      {/* <PromotionsSection /> */}
+      <PromotionsSection />
       {/* Import TopSellersSection component */}
-      {/* <TopSellersSection /> */}
+      <TopSellersSection />
       {/* <ProductSection /> */}
       {/* Import FeaturesSection component */}
       {/* <FeaturesSection /> */}

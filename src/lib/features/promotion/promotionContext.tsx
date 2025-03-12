@@ -13,6 +13,8 @@ interface Promotion {
   brand: string;
   originalPrice: string;
   imageSrc: string;
+  sold: number;
+  totalSale: number;
 }
 
 interface PromotionState {
@@ -64,6 +66,8 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         brand: "EcoHome",
         originalPrice: "10",
         imageSrc: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        sold: 40,
+        totalSale: 100,
       },
       {
         id: "2",
@@ -76,24 +80,28 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         brand: "Techie",
         originalPrice: "129",
         imageSrc: "https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        sold: 60,
+        totalSale: 1200,
       },
       {
-        id: "3",
-        slug: "stainless-steel-chef-knife",
-        name: "Stainless Steel Chef Knife",
-        price: 29,
-        shortDescription: "Stainless Steel Chef Knife",
-        detailedDescription: "Professional-grade stainless steel chef knife with ergonomic handle and sharp blade.",
+        id: "6",
+        slug: "wi-fi-smart-plug",
+        name: "Wi-Fi Smart Plug",
+        price: 15,
+        shortDescription: "Wi-Fi Smart Plug",
+        detailedDescription: "Wi-Fi smart plug for remote control of home appliances and energy monitoring.",
         quantity: 0,
-        brand: "KitchenPro",
-        originalPrice: "49",
-        imageSrc: "https://images.unsplash.com/photo-1651950537598-373e4358d320?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MjV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        brand: "SmartHome",
+        originalPrice: "25",
+        imageSrc: "https://images.unsplash.com/photo-1649261191606-cb2496e97eee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        sold: 80,
+        totalSale: 500,
       },
     ];
 
     // Set promotion start and end times - change these values as needed
-    const promotionStartTime = new Date("2025-03-06T16:10:00");
-    const promotionEndTime = new Date("2025-03-06T16:35:00");
+    const promotionStartTime = new Date("2025-03-12T14:40:00");
+    const promotionEndTime = new Date("2025-03-12T17:35:00");
 
     dispatch({ type: 'SET_PROMOTIONS', payload: promotions });
     dispatch({ type: 'SET_START_TIME', payload: promotionStartTime });
