@@ -100,8 +100,8 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     ];
 
     // Set promotion start and end times - change these values as needed
-    const promotionStartTime = new Date("2025-03-12T14:40:00");
-    const promotionEndTime = new Date("2025-03-12T17:35:00");
+    const promotionStartTime = new Date("2025-03-13T14:40:00");
+    const promotionEndTime = new Date("2025-03-14T17:35:00");
 
     dispatch({ type: 'SET_PROMOTIONS', payload: promotions });
     dispatch({ type: 'SET_START_TIME', payload: promotionStartTime });

@@ -7,7 +7,7 @@ import ReviewsSection from '../../components/reviewsSection';
 import TopSellersSection from '../../components/topSellersSection';
 import PromotionsSection from '../../components/promotionsSection';
 import PartnerSection from '../../components/partnerSection';
-import ProductSection from '../../components/productMixSection';
+import CustomerActivitySection from '../../components/customerActivitySection';
 export default function Home() {
   return (
     <div>
@@ -15,17 +15,18 @@ export default function Home() {
       <HomeSlide />
       {/* Import ProcessInto component */}
       <ProcessInto />
-      {/* Import ReviewsSection component */}
+      {/* Import PromotionsSection component */}
       <PromotionsSection />
+      {/* Import CustomerActivitySection Two Column component */}
+      <CustomerActivitySection />
       {/* Import TopSellersSection component */}
       <TopSellersSection />
-      {/* <ProductSection /> */}
       {/* Import FeaturesSection component */}
-      {/* <FeaturesSection /> */}
-      {/* Import PromotionsSection component */}
-      {/* <ReviewsSection /> */}
+      <FeaturesSection />
+      {/* Import ReviewsSection component */}
+      <ReviewsSection />
       {/* Import PartnerSection component  */}
-      {/* <PartnerSection /> */}
+      <PartnerSection />
     </div>
   );
 }

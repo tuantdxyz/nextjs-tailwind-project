@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewCard from './reviewCard';
 
+const REVIEW_TEXT = 'We have some fans';
 const reviews = [
     {
         name: 'Daniella Doe',
@@ -42,14 +43,14 @@ const reviews = [
 
 const ReviewsSection: React.FC = () => {
     return (
-        <div className="text-gray-600 dark:text-gray-300 pt-8 dark:bg-gray-900" id="reviews">
+        <div className="text-gray-600 dark:text-gray-300 pt-2 dark:bg-gray-900" id="reviews">
             <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-                <div className="mb-10 space-y-4 px-6 md:px-0">
-                    <h2 className="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-4xl">
-                        We have some fans.
+                <div className="mb-2 space-y-4 px-6 md:px-0">
+                    <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+                        {REVIEW_TEXT}
                     </h2>
                 </div>
-                <div className="md:columns-2 lg:columns-3 gap-8 space-y-8">
+                <div className="md:columns-2 lg:columns-3 gap-8 space-y-2">
                     {reviews.map((review, index) => (
                         <ReviewCard
                             key={index}
