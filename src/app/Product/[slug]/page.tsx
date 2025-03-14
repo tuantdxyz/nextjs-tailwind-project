@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import React from 'react';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
 import Breadcrumbs from '../../../components/breadcrumbs';
 import { useCart } from '../../../lib/features/cart/cartContext';
 
@@ -18,100 +19,168 @@ interface Product {
   brand: string;
   originalPrice: string;
   imageSrc: string;
+  sold: number;
+  notes: string;
+  promotionStartTime: Date | null;
+  promotionEndTime: Date | null;
+  soldDuringPromotion: number;
+  totalSale: number;
 }
 
 const products: Product[] = [
   {
     id: '1',
-    slug: 'eco-friendly-bamboo-toothbrush',
-    name: 'Eco-friendly Bamboo Toothbrush',
-    price: 5,
-    shortDescription: 'Eco-friendly Bamboo Toothbrush',
-    detailedDescription: 'Eco-friendly Bamboo Toothbrush with soft bristles and ergonomic handle.',
-    quantity: 0,
-    brand: 'EcoHome',
-    originalPrice: '10',
-    imageSrc: 'https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'airpod-2',
+    name: 'Airpod 2',
+    price: 150,
+    shortDescription: 'Tai nghe không dây Airpod 2',
+    detailedDescription: 'Tai nghe không dây Airpod 2 với âm thanh chất lượng cao và thời lượng pin lâu.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '200',
+    imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 50,
+    notes: 'Sản phẩm chất lượng cao',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 30,
+    totalSale: 1000
   },
   {
     id: '2',
-    slug: 'wireless-bluetooth-headphones',
-    name: 'Wireless Bluetooth Headphones',
-    price: 79,
-    shortDescription: 'Wireless Bluetooth Headphones',
-    detailedDescription: 'High-quality wireless Bluetooth headphones with noise cancellation and long battery life.',
-    quantity: 0,
-    brand: 'Techie',
-    originalPrice: '129',
-    imageSrc: 'https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'airpod-3',
+    name: 'Airpod 3',
+    price: 180,
+    shortDescription: 'Tai nghe không dây Airpod 3',
+    detailedDescription: 'Tai nghe không dây Airpod 3 với âm thanh không gian và thời lượng pin lâu.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '230',
+    imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 60,
+    notes: 'Sản phẩm mới nhất của Apple',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 40,
+    totalSale: 1000
   },
   {
     id: '3',
-    slug: 'stainless-steel-chef-knife',
-    name: 'Stainless Steel Chef Knife',
-    price: 29,
-    shortDescription: 'Stainless Steel Chef Knife',
-    detailedDescription: 'Professional-grade stainless steel chef knife with ergonomic handle and sharp blade.',
-    quantity: 0,
-    brand: 'KitchenPro',
-    originalPrice: '49',
-    imageSrc: 'https://images.unsplash.com/photo-1651950537598-373e4358d320?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MjV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'airpod-pro',
+    name: 'Airpod Pro',
+    price: 250,
+    shortDescription: 'Tai nghe không dây Airpod Pro',
+    detailedDescription: 'Tai nghe không dây Airpod Pro với chống ồn chủ động và âm thanh vượt trội.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '300',
+    imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 70,
+    notes: 'Sản phẩm cao cấp với chất lượng âm thanh tuyệt vời',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 50,
+    totalSale: 1000
   },
   {
     id: '4',
-    slug: 'luxury-silk-scarf',
-    name: 'Luxury Silk Scarf',
-    price: 45,
-    shortDescription: 'Luxury Silk Scarf',
-    detailedDescription: 'Elegant luxury silk scarf with intricate patterns and soft texture.',
-    quantity: 0,
-    brand: 'Glamour',
-    originalPrice: '75',
-    imageSrc: 'https://images.unsplash.com/photo-1651950540805-b7c71869e689?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'airpod-pro-2',
+    name: 'Airpod Pro 2',
+    price: 270,
+    shortDescription: 'Tai nghe không dây Airpod Pro 2',
+    detailedDescription: 'Tai nghe không dây Airpod Pro 2 với chống ồn và âm thanh không gian.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '320',
+    imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 80,
+    notes: 'Phiên bản mới nâng cấp với nhiều tính năng mới',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 60,
+    totalSale: 1000
   },
   {
     id: '5',
-    slug: 'yoga-mat-with-alignment-lines',
-    name: 'Yoga Mat with Alignment Lines',
-    price: 20,
-    shortDescription: 'Yoga Mat with Alignment Lines',
-    detailedDescription: 'High-quality yoga mat with alignment lines for perfect poses and extra grip.',
-    quantity: 0,
-    brand: 'FitnessHub',
-    originalPrice: '35',
-    imageSrc: 'https://images.unsplash.com/photo-1649261191624-ca9f79ca3fc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'pin-iphone-8',
+    name: 'Pin iPhone 8',
+    price: 50,
+    shortDescription: 'Pin thay thế cho iPhone 8',
+    detailedDescription: 'Pin thay thế chất lượng cao cho iPhone 8, dung lượng lớn và bền bỉ.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '70',
+    imageSrc: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 100,
+    notes: 'Pin chính hãng, đảm bảo chất lượng',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 70,
+    totalSale: 1000
   },
   {
     id: '6',
-    slug: 'wi-fi-smart-plug',
-    name: 'Wi-Fi Smart Plug',
-    price: 15,
-    shortDescription: 'Wi-Fi Smart Plug',
-    detailedDescription: 'Wi-Fi smart plug for remote control of home appliances and energy monitoring.',
-    quantity: 0,
-    brand: 'SmartHome',
-    originalPrice: '25',
-    imageSrc: 'https://images.unsplash.com/photo-1649261191606-cb2496e97eee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
+    slug: 'pin-iphone-9',
+    name: 'Pin iPhone 9',
+    price: 60,
+    shortDescription: 'Pin thay thế cho iPhone 9',
+    detailedDescription: 'Pin thay thế chất lượng cao cho iPhone 9, dung lượng lớn và bền bỉ.',
+    quantity: 100,
+    brand: 'Apple',
+    originalPrice: '80',
+    imageSrc: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    sold: 90,
+    notes: 'Pin chính hãng, đảm bảo chất lượng',
+    promotionStartTime: new Date("2025-03-14T17:35:00"),
+    promotionEndTime: new Date("2025-03-21T17:35:00"),
+    soldDuringPromotion: 80,
+    totalSale: 1000
   }
 ];
 
 const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   const [slug, setSlug] = useState<string>('');
   const { state: cart, dispatch } = useCart();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const slideInterval = 5000; // 5 seconds
 
   useEffect(() => {
     params.then(p => setSlug(p.slug));
   }, [params]);
 
   const product = products.find(p => p.slug === slug);
+  const similarProducts = products.filter(p => p.id !== product?.id);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const itemsToShow = isMobile ? 2 : 3;
+      setCurrentIndex((prevIndex) => (prevIndex + itemsToShow) % similarProducts.length);
+    }, slideInterval);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [similarProducts.length, slideInterval, isMobile]);
 
   if (!product) {
     return <h1>Product not found</h1>;
   }
 
-  const handleAddToCart = () => {
-    // Check ID của product và service để không trùng nhau
-    // TODO
+  const handleAddToCart = (product: Product) => {
     const existingProduct = cart.items.find(item => item.id === product.id);
     if (existingProduct) {
       toast.info(`${product.name} is already in the cart!`);
@@ -122,8 +191,7 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
   };
 
   const handleBuyNow = () => {
-    handleAddToCart();
-    // Chuyển hướng đến trang giỏ hàng
+    handleAddToCart(product);
   };
 
   const breadcrumbItems = [
@@ -132,22 +200,41 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
     { name: product.name, href: `/product/${product.slug}`, current: true },
   ];
 
+  const handlePrevSlide = () => {
+    const itemsToShow = isMobile ? 2 : 3;
+    setCurrentIndex((prevIndex) => (prevIndex - itemsToShow + similarProducts.length) % similarProducts.length);
+  };
+
+  const handleNextSlide = () => {
+    const itemsToShow = isMobile ? 2 : 3;
+    setCurrentIndex((prevIndex) => (prevIndex + itemsToShow) % similarProducts.length);
+  };
+
+  const getVisibleProducts = () => {
+    const itemsToShow = isMobile ? 2 : 3;
+    const endIndex = currentIndex + itemsToShow;
+    if (endIndex > similarProducts.length) {
+      return similarProducts.slice(currentIndex).concat(similarProducts.slice(0, endIndex - similarProducts.length));
+    }
+    return similarProducts.slice(currentIndex, endIndex);
+  };
+
   return (
     <>
-      <div className="bg-gray-100 dark:bg-gray-800 py-8">
+      <div className="py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-16"> {/* Thêm khoảng cách phía trên để tránh bị che bởi Navbar */}
+          <div className="mt-2">
             <Breadcrumbs items={breadcrumbItems} />
           </div>
           <div className="flex flex-col md:flex-row -mx-4 mt-4">
             <div className="md:flex-1 px-4">
-              <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
-                <img className="w-full h-full object-cover" src={product.imageSrc} alt={product.name} />
+              <div className="h-[460px] rounded-lg mb-4">
+                <Image className="w-full h-full object-cover" src={product.imageSrc} alt={product.name} width={500} height={460} />
               </div>
               <div className="flex -mx-2 mb-4">
                 <div className="w-1/2 px-2">
                   <button
-                    onClick={handleAddToCart}
+                    onClick={() => handleAddToCart(product)}
                     className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     Add to Cart
@@ -178,7 +265,7 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
                   onClick={handleBuyNow}
                   className="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700"
                 >
-                  <img src="/buynow.svg" alt="Buy now icon" width={16} height={17} className="mr-3" />
+                  <Image src="/buynow.svg" alt="Buy now icon" width={16} height={17} className="mr-3" />
                   Buy now
                 </button>
               </Link>
@@ -188,9 +275,65 @@ const ProductDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
               </div>
               <div className="mt-6 border-t max-w-sm mx-auto w-full"></div>
               <Link href="/" className="flex items-center font-semibold text-blue-600 text-sm mt-4">
-                <img src="/back.svg" alt="Back" width={20} height={20} className="mr-2" />
+                <Image src="/back.svg" alt="Back" width={20} height={20} className="mr-2" />
                 <span className="ml-2">Continue Shopping</span>
               </Link>
+            </div>
+          </div>
+          {/* sản phẩm tương tự */}
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Sản phẩm tương tự</h2>
+            <div className="relative">
+              <button
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 dark:bg-gray-700 p-2 rounded-full"
+                onClick={handlePrevSlide}
+              >
+                <Image src="/prev_icon.svg" alt="Previous" width={24} height={24} />
+              </button>
+              <div className="flex justify-center overflow-hidden">
+                {similarProducts.length > 0 && (
+                  getVisibleProducts().slice(0, 4).map((similarProduct, index) => (
+                    // lấy ra 4 sản phẩm tương tự
+                    <div key={similarProduct.id} className={`w-44 flex-shrink-0 mx-1 ${isMobile ? 'w-1/3' : 'w-56'}`}>
+                      <Link href={`/product/${similarProduct.slug}`}>
+                        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                          <Image
+                            className="w-full h-32 object-cover"
+                            src={similarProduct.imageSrc}
+                            alt={similarProduct.name}
+                            width={224}
+                            height={128}
+                          />
+                          <div className="p-4 flex justify-between items-center">
+                            <div className="truncate w-4/5">
+                              <h3 className="text-sm font-semibold text-gray-800 dark:text-white truncate">{similarProduct.name}</h3>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">${similarProduct.price.toFixed(2)}</p>
+                            </div>
+                            <button
+                              onClick={(e) => { e.preventDefault(); handleAddToCart(similarProduct); }}
+                              className="ml-2 flex items-center justify-center h-full"
+                            >
+                              <Image
+                                src="/cart.svg"
+                                alt="Add to Cart"
+                                width={40}
+                                height={40}
+                                className="object-contain"
+                              />
+                            </button>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))
+                )}
+              </div>
+              <button
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 dark:bg-gray-700 p-2 rounded-full"
+                onClick={handleNextSlide}
+              >
+                <Image src="/next_icon.svg" alt="Next" width={24} height={24} />
+              </button>
             </div>
           </div>
         </div>

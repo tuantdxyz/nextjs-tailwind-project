@@ -14,6 +14,10 @@ interface Promotion {
   originalPrice: string;
   imageSrc: string;
   sold: number;
+  notes: string;
+  promotionStartTime: Date | null;
+  promotionEndTime: Date | null;
+  soldDuringPromotion: number;
   totalSale: number;
 }
 
@@ -56,52 +60,64 @@ export const PromotionProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     // Simulated server response
     const promotions: Promotion[] = [
       {
-        id: "1",
-        slug: "eco-friendly-bamboo-toothbrush",
-        name: "Eco-friendly Bamboo Toothbrush",
-        price: 5,
-        shortDescription: "Eco-friendly Bamboo Toothbrush",
-        detailedDescription: "Eco-friendly Bamboo Toothbrush with soft bristles and ergonomic handle.",
-        quantity: 0,
-        brand: "EcoHome",
-        originalPrice: "10",
-        imageSrc: "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        sold: 40,
-        totalSale: 100,
+        id: '1',
+        slug: 'airpod-2',
+        name: 'Airpod 2',
+        price: 150,
+        shortDescription: 'Tai nghe không dây Airpod 2',
+        detailedDescription: 'Tai nghe không dây Airpod 2 với âm thanh chất lượng cao và thời lượng pin lâu.',
+        quantity: 100,
+        brand: 'Apple',
+        originalPrice: '200',
+        imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        sold: 50,
+        notes: 'Sản phẩm chất lượng cao',
+        promotionStartTime: new Date("2025-03-14T17:35:00"),
+        promotionEndTime: new Date("2025-03-21T17:35:00"),
+        soldDuringPromotion: 30,
+        totalSale: 100
       },
       {
-        id: "2",
-        slug: "wireless-bluetooth-headphones",
-        name: "Wireless Bluetooth Headphones",
-        price: 79,
-        shortDescription: "Wireless Bluetooth Headphones",
-        detailedDescription: "High-quality wireless Bluetooth headphones with noise cancellation and long battery life.",
-        quantity: 0,
-        brand: "Techie",
-        originalPrice: "129",
-        imageSrc: "https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        id: '2',
+        slug: 'airpod-3',
+        name: 'Airpod 3',
+        price: 180,
+        shortDescription: 'Tai nghe không dây Airpod 3',
+        detailedDescription: 'Tai nghe không dây Airpod 3 với âm thanh không gian và thời lượng pin lâu.',
+        quantity: 100,
+        brand: 'Apple',
+        originalPrice: '230',
+        imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
         sold: 60,
-        totalSale: 1200,
+        notes: 'Sản phẩm mới nhất của Apple',
+        promotionStartTime: new Date("2025-03-14T17:35:00"),
+        promotionEndTime: new Date("2025-03-21T17:35:00"),
+        soldDuringPromotion: 40,
+        totalSale: 1000
       },
       {
-        id: "6",
-        slug: "wi-fi-smart-plug",
-        name: "Wi-Fi Smart Plug",
-        price: 15,
-        shortDescription: "Wi-Fi Smart Plug",
-        detailedDescription: "Wi-Fi smart plug for remote control of home appliances and energy monitoring.",
-        quantity: 0,
-        brand: "SmartHome",
-        originalPrice: "25",
-        imageSrc: "https://images.unsplash.com/photo-1649261191606-cb2496e97eee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-        sold: 80,
-        totalSale: 500,
+        id: '3',
+        slug: 'airpod-pro',
+        name: 'Airpod Pro',
+        price: 250,
+        shortDescription: 'Tai nghe không dây Airpod Pro',
+        detailedDescription: 'Tai nghe không dây Airpod Pro với chống ồn chủ động và âm thanh vượt trội.',
+        quantity: 100,
+        brand: 'Apple',
+        originalPrice: '300',
+        imageSrc: 'https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+        sold: 70,
+        notes: 'Sản phẩm cao cấp với chất lượng âm thanh tuyệt vời',
+        promotionStartTime: new Date("2025-03-14T17:35:00"),
+        promotionEndTime: new Date("2025-03-21T17:35:00"),
+        soldDuringPromotion: 50,
+        totalSale: 50
       },
     ];
 
     // Set promotion start and end times - change these values as needed
-    const promotionStartTime = new Date("2025-03-13T14:40:00");
-    const promotionEndTime = new Date("2025-03-14T17:35:00");
+    const promotionStartTime = new Date("2025-03-13T16:40:00");
+    const promotionEndTime = new Date("2025-03-13T17:35:00");
 
     dispatch({ type: 'SET_PROMOTIONS', payload: promotions });
     dispatch({ type: 'SET_START_TIME', payload: promotionStartTime });

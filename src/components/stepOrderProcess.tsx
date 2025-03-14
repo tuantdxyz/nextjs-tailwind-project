@@ -14,17 +14,24 @@ const StepOrderProcess: React.FC<StepOrderProcessProps> = ({ currentStep, paymen
     ];
 
     return (
-        <div className="grid md:grid-cols-4 border-b border-cyan-200 mb-8">
+        <div className="grid md:grid-cols-4 mb-8 shadow-lg border-t-4 border-blue-700">
             {steps.map((step, index) => (
-                <div key={index} className={`p-6 border-r border-cyan-200 text-center relative z-1 ${(index <= currentStep || (paymentStatus === 'Paid' && index === 2)) ? '' : 'opacity-50'}`}>
+                <div key={index} className={`p-6 text-center relative z-1 ${(index <= currentStep || (paymentStatus === 'Paid' && index === 2)) ? '' : 'opacity-50'}`}>
                     <div className="flex items-center justify-center mb-4">
-                        <div className={`w-12 h-12 rounded-full ${(index <= currentStep || (paymentStatus === 'Paid' && index === 2)) ? 'bg-cyan-500' : 'bg-cyan-300'} text-white flex items-center justify-center font-bold text-lg relative z-1`}>
+                        <div className={`w-10 h-10 ${(index <= currentStep || (paymentStatus === 'Paid' && index === 2)) ? 'bg-blue-500' : 'bg-blue-300'} text-white flex items-center justify-center font-bold text-lg relative z-1`}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={step.icon} />
                             </svg>
                         </div>
                     </div>
-                    <h3 className="text-sm font-semibold text-cyan-700">{step.label}</h3>
+                    <h3 className="text-sm font-semibold text-blue-700">{step.label}</h3>
+                    {index < steps.length - 1 && (
+                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    )}
                 </div>
             ))}
         </div>

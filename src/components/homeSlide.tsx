@@ -9,9 +9,12 @@ const HomeSlide: React.FC = () => {
   const { t } = useTranslation('common');
   const [activeIndex, setActiveIndex] = useState(0);
   const slides = [
-    { src: "/img4.jpg", alt: t("Image 4 alt text"), label: t("Slide 1 label"), content: t("Slide 1 content") },
-    { src: "/img5.jpg", alt: t("Image 5 alt text"), label: t("Slide 2 label"), content: t("Slide 2 content") },
-    { src: "/img6.jpg", alt: t("Image 6 alt text"), label: t("Slide 3 label"), content: t("Slide 3 content") }
+    // { src: "/img4.jpg", alt: t("Image 4 alt text"), label: t("Slide 1 label"), content: t("Slide 1 content") },
+    // { src: "/img5.jpg", alt: t("Image 5 alt text"), label: t("Slide 2 label"), content: t("Slide 2 content") },
+    // { src: "/img6.jpg", alt: t("Image 6 alt text"), label: t("Slide 3 label"), content: t("Slide 3 content") },
+    { src: "/slide-show01.jpg", alt: "Image 4 alt text", label: "Slide 1 label", content: "Slide 1 content" },
+    { src: "/slide-show02.jpg", alt: "Image 5 alt text", label: "Slide 2 label", content: "Slide 2 content" },
+    { src: "/slide-show03.jpg", alt: "Image 6 alt text", label: "Slide 3 label", content: "Slide 3 content" }
   ];
   const slideInterval = 5000; // 5 seconds
 

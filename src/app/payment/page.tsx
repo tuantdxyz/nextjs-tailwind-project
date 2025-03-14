@@ -7,12 +7,12 @@ import { useCart } from '../../lib/features/cart/cartContext';
 import StepOrderProcess from '../../components/stepOrderProcess';
 
 const PaymentPage: React.FC = () => {
-    // const { state: cart } = useCart();
     const { state: cart, dispatch } = useCart();
     const [paymentStatus, setPaymentStatus] = useState<'Unpaid' | 'Paid' | 'Cancelled'>('Unpaid');
     const [timeRemaining, setTimeRemaining] = useState(10); // 10 giây
-    const [loading, setLoading] = useState(false);
     const QRCodeImage = '/QRCodePayment.png'; // Đường dẫn đến ảnh QRCode
+
+    const ORDER_TEXT = 'Thông tin đặt hàng';
 
     useEffect(() => {
         if (paymentStatus === 'Unpaid') {
@@ -20,8 +20,7 @@ const PaymentPage: React.FC = () => {
                 setTimeRemaining((prev) => {
                     if (prev <= 1) {
                         clearInterval(timer);
-                        // setPaymentStatus('Cancelled');
-                        setPaymentStatus('Paid');    //test thanh toan thanh cong
+                        setPaymentStatus('Paid'); // Test thanh toán thành công
                         return 0;
                     }
                     return prev - 1;
@@ -42,7 +41,6 @@ const PaymentPage: React.FC = () => {
         const telegramToken = process.env.TELEGRAM_TOKEN_BOT;
         const chatId = process.env.TELEGRAM_CHAT_ID;
         const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
-        // const url = process.env.TELEGRAM_GROUP_URL;
 
         try {
             const response = await fetch(url, {
@@ -67,11 +65,13 @@ const PaymentPage: React.FC = () => {
     const totalAmount = cart.items.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
-            <div className="w-full max-w-2xl p-4 bg-white shadow-2xl dark:bg-gray-900 sm:p-10 sm:rounded-3xl">
+        <div className="flex items-center justify-center min-h-screen">
+            <div className="w-full max-w-2xl p-4 shadow-2xl dark:bg-gray-900 sm:p-10 sm:rounded-3xl">
                 <form className="text-center" onSubmit={(e) => e.preventDefault()}>
-                    <h1 className="text-4xl font-extrabold text-green-700 dark:text-green-400">Thông tin đặt hàng</h1>
-
+                    {/* <h1 className="text-3xl text-gray-800 dark:text-white">Thông tin đặt hàng</h1> */}
+                    <h2 className="text-xl pb-2 md:text-2xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+                        {ORDER_TEXT}
+                    </h2>
                     {/* Steps for Order Process */}
                     <StepOrderProcess currentStep={1} paymentStatus={paymentStatus} />
 
@@ -79,12 +79,11 @@ const PaymentPage: React.FC = () => {
                     <p className="mt-2 text-lg text-gray-800 dark:text-gray-300">Tổng giá: ${totalAmount.toFixed(2)}</p>
 
                     {paymentStatus === 'Unpaid' && (
-                        <div className="mt-6 ">
-                            <img src="QRCodePayment.png" alt="QR Code" className="mx-auto w-300 h-300" />
+                        <div className="mt-6">
+                            <Image src={QRCodeImage} alt="QR Code" className="mx-auto" width={200} height={200} />
                             <h2 className="mt-4 text-lg text-gray-800 dark:text-gray-300">Vui lòng quét mã QR để thanh toán</h2>
                             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Hệ thống đang chờ xác nhận thanh toán của bạn.</p>
                             <p className="mt-2 text-lg text-blue-600 dark:text-blue-400">Thời gian còn lại: {timeRemaining} giây</p>
-                            {loading && <div className="loader"></div>}
                         </div>
                     )}
 

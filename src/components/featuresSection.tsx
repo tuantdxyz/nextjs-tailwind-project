@@ -5,28 +5,28 @@ const FEATURES_TEXT = "Tại Sao Chọn Chúng Tôi";
 
 const features = [
     {
-        title: 'Increase sales',
-        description: 'Consectetur pariatur irure exercitation sit amet id consectetur consecteturmagna et Lorem labore qui velit.',
+        title: 'Giao Hàng Miễn Phí',
+        description: 'Chúng tôi cung cấp dịch vụ giao hàng miễn phí cho tất cả các đơn hàng.',
     },
     {
-        title: 'Enterprise-ready',
-        description: 'Labore duis pariatur est exercitation laboris cupidatat amet cillum. Amet nisi ullamco.',
+        title: 'Đổi Trả Trong 90 Ngày',
+        description: 'Khách hàng có thể đổi trả và bảo hành sản phẩm trong thời gian lên đến 90 ngày.',
     },
     {
-        title: 'Unlimited growth',
-        description: 'Elit deserunt nisi esse duis cupidatat proident sit minim mollit officia pariatur incididunt in tempor.',
+        title: 'Thanh Toán Đa Dạng',
+        description: 'Chúng tôi hỗ trợ nhiều hình thức thanh toán linh hoạt và tiện lợi.',
     },
     {
-        title: 'Recommended by experts',
-        description: 'Velit sit tempor pariatur quis pariatur incididunt culpa dolor voluptate officia incididunt velit dolore.',
+        title: 'Hỗ Trợ 24/7',
+        description: 'Đội ngũ hỗ trợ khách hàng của chúng tôi luôn sẵn sàng phục vụ 24/7.',
     },
     {
-        title: 'Modern platform',
-        description: 'Laboris elit consectetur sint nisi eu mollit proident sit magna velit adipisicing consequat amet reprehenderit.',
+        title: 'Chiết Khấu Lần 2',
+        description: 'Khách hàng sẽ nhận được chiết khấu đặc biệt khi mua hàng lần thứ hai.',
     },
     {
-        title: 'Integrations',
-        description: 'Nostrud excepteur incididunt proident sit nulla ipsum sunt nostrud est esse adipisicing irure officia consectetur.',
+        title: 'Giảm Giá Khi Giới Thiệu Bạn Bè',
+        description: 'Khách hàng sẽ nhận được mã giảm giá khi giới thiệu bạn bè mua hàng.',
     }
 ];
 
@@ -42,11 +42,11 @@ const FeaturesSection: React.FC = () => {
                 <div className="flex flex-wrap">
                     {features.map((feature) => (
                         <div key={feature.title} className="w-full border-b md:w-1/2 lg:w-1/3 p-4 sm:p-6">
-                            <div className="flex items-center mb-4 sm:mb-6">
+                            <div className="flex items-center mb-2 sm:mb-4">
                                 <Image src="/icon_checked.svg" alt="Checked Icon" width={20} height={20} className="h-6 w-6" />
-                                <div className="ml-2 sm:ml-4 text-lg sm:text-xl text-gray-800">{feature.title}</div>
+                                <div className="ml-2 sm:ml-4 text-lg sm:text-xl text-gray-800 dark:text-gray-200">{feature.title}</div>
                             </div>
-                            <p className="leading-loose text-gray-600 text-justify">{feature.description}</p>
+                            <p className="leading-loose text-gray-600 dark:text-gray-400 text-justify">{feature.description}</p>
                         </div>
                     ))}
                 </div>

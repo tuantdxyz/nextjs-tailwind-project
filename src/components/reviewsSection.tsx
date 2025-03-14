@@ -1,49 +1,31 @@
 import React from 'react';
 import ReviewCard from './reviewCard';
 
-const REVIEW_TEXT = 'We have some fans';
+const REVIEW_TEXT = 'KOL fans nói gì';
 const reviews = [
     {
-        name: 'Daniella Doe',
-        role: 'Mobile dev',
+        name: 'Nguyễn Hà',
+        role: 'Ca Sĩ',
         avatar: 'https://randomuser.me/api/portraits/women/12.jpg',
-        review: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aliquid quo eum quae quos illo earum ipsa doloribus nostrum minus libero aspernatur laborum cum, a suscipit, ratione ea totam ullam! Lorem ipsum dolor sit amet consectetur, adipisicing elit.'
+        review: 'Sản phẩm rất tốt, tôi rất hài lòng. Chất lượng vượt trội và dịch vụ hỗ trợ khách hàng tuyệt vời.',
     },
     {
-        name: 'Jane Doe',
-        role: 'Marketing',
+        name: 'Trần Anh',
+        role: 'Diễn Viên',
         avatar: 'https://randomuser.me/api/portraits/women/14.jpg',
-        review: 'Lorem ipsum dolor laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.'
+        review: 'Dịch vụ giao hàng nhanh chóng và sản phẩm đúng như mô tả. Tôi sẽ tiếp tục ủng hộ.',
     },
     {
-        name: 'Yanick Doe',
-        role: 'Developer',
+        name: 'Lê Công',
+        role: 'Top Tictoker',
         avatar: 'https://randomuser.me/api/portraits/women/18.jpg',
-        review: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.'
+        review: 'Tôi rất ấn tượng với chất lượng sản phẩm và dịch vụ của các bạn. Sẽ giới thiệu đến bạn bè.',
     },
-    // {
-    //     name: 'Jane Doe',
-    //     role: 'Mobile dev',
-    //     avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
-    //     review: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.'
-    // }
-    // {
-    //     name: 'Andy Doe',
-    //     role: 'Manager',
-    //     avatar: 'https://randomuser.me/api/portraits/women/62.jpg',
-    //     review: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.'
-    // },
-    // {
-    //     name: 'Yanndy Doe',
-    //     role: 'Mobile dev',
-    //     avatar: 'https://randomuser.me/api/portraits/women/19.jpg',
-    //     review: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto laboriosam deleniti aperiam ab veniam sint non cumque quis tempore cupiditate. Sint libero voluptas veniam at reprehenderit, veritatis harum et rerum.'
-    // }
 ];
 
 const ReviewsSection: React.FC = () => {
     return (
-        <div className="text-gray-600 dark:text-gray-300 pt-2 dark:bg-gray-900" id="reviews">
+        <div className="text-gray-600 dark:text-gray-300 pt-2" id="reviews">
             <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
                 <div className="mb-2 space-y-4 px-6 md:px-0">
                     <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-gray-800 dark:text-white">

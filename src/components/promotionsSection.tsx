@@ -64,36 +64,38 @@ const PromotionsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
         <div className="mb-3 space-y-4 px-6 md:px-0">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-gray-800 dark:text-white">
-              {PROMOTION_ACTIVE_TEXT}
-            </h2>
+            <div className="flex items-center">
+              <Image src="/set.svg" alt="Set Icon" width={18} height={21} />
+              <h2 className="ml-2 text-xl md:text-2xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+                {PROMOTION_ACTIVE_TEXT}
+              </h2>
+            </div>
             {isPromotionActive && (
               <div className="flex items-center gap-2 text-red-500">
-                <Image src="/set.svg" alt="Set Icon" width={18} height={21} />
-                <div className="flex gap-2 items-baseline text-xs md:text-base">
-                  <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                <div className="flex gap-2 items-baseline text-xl md:text-xl border border-red-500 p-2 rounded bg-red-500" style={{ width: '100px' }} >
+                  <div className="flex items-center justify-center">
+                    <span className="countdown font-mono text-xl md:text-xl text-white">
                       <span style={{ "--value": countdown.hours } as React.CSSProperties} aria-live="polite" aria-label="hours">
                         {countdown.hours}
                       </span>
                     </span>
-                    <span className="text-lg text-black ml-1">h</span>
+                    <span className="text-xs text-white ml-1">:</span>
                   </div>
-                  <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                  <div className="flex items-center justify-center">
+                    <span className="countdown font-mono text-xl md:text-xl text-white">
                       <span style={{ "--value": countdown.minutes } as React.CSSProperties} aria-live="polite" aria-label="minutes">
                         {countdown.minutes}
                       </span>
                     </span>
-                    <span className="text-lg text-black ml-1">m</span>
+                    <span className="text-xs text-white ml-1">:</span>
                   </div>
-                  <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                  <div className="flex items-center justify-center">
+                    <span className="countdown font-mono text-xl md:text-xl text-white">
                       <span style={{ "--value": countdown.seconds } as React.CSSProperties} aria-live="polite" aria-label="seconds">
                         {countdown.seconds}
                       </span>
                     </span>
-                    <span className="text-lg text-black ml-1">s</span>
+                    {/* <span className="text-xs text-white ml-1">s</span> */}
                   </div>
                 </div>
               </div>
@@ -111,22 +113,16 @@ const PromotionsSection: React.FC = () => {
                     <p className="text-sm md:text-lg font-bold text-black dark:text-white truncate block capitalize">{promotion.name}</p>
                     <div className="flex items-center">
                       <p className="text-sm md:text-lg font-semibold text-black dark:text-white cursor-auto my-3">${promotion.price.toFixed(2)}</p>
-                      {/* DIV PROGRESS CONFIG */}
                       <div className="flex flex-col items-center w-full ml-2">
                         <div className="bg-white rounded-lg w-full block">
                           <div className="w-full h-4 bg-gray-400 rounded-full">
-                            <div className="h-full text-center text-xs text-white bg-red-300 rounded-full" style={{ width: `${(promotion.sold / promotion.totalSale) * 100}%` }}>
+                            <div className="h-full text-center text-xs text-white bg-red-300 rounded-full" style={{ width: `${(promotion.soldDuringPromotion / promotion.totalSale) * 100}%` }}>
                               {`${promotion.sold} sold`}
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="ml-auto">
-                        {/* TODO ảnh sale, deal */}
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-5 w-5 text-black dark:text-white">
-                          <path fillRule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                          <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                        </svg> */}
                       </div>
                     </div>
                   </div>
@@ -148,7 +144,7 @@ const PromotionsSection: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <span>{PROMOTION_UPCOMING_TEXT}</span>
                   <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                    <span className="countdown font-mono text-3xl md:text-5xl text-white">
                       <span style={{ "--value": countdown.hours } as React.CSSProperties} aria-live="polite" aria-label="hours">
                         {countdown.hours}
                       </span>
@@ -156,7 +152,7 @@ const PromotionsSection: React.FC = () => {
                     <span className="text-lg text-black ml-1">h</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                    <span className="countdown font-mono text-3xl md:text-5xl text-white">
                       <span style={{ "--value": countdown.minutes } as React.CSSProperties} aria-live="polite" aria-label="minutes">
                         {countdown.minutes}
                       </span>
@@ -164,7 +160,7 @@ const PromotionsSection: React.FC = () => {
                     <span className="text-lg text-black ml-1">m</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="countdown font-mono text-3xl md:text-5xl">
+                    <span className="countdown font-mono text-3xl md:text-5xl text-white">
                       <span style={{ "--value": countdown.seconds } as React.CSSProperties} aria-live="polite" aria-label="seconds">
                         {countdown.seconds}
                       </span>
