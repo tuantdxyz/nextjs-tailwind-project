@@ -1,42 +1,92 @@
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import Image from "next/image";
+import { getDiscountCodes, updateDiscountCode } from "../../lib/db/jsonDb";
 
-import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import Image from 'next/image';
-import { getDiscountCodes, updateDiscountCode } from '../../lib/db/jsonDb';
+interface DiscountCodeData {
+    code: string;
+    discount: number;
+    used: number;
+    maxcount: number;
+}
 
 interface DiscountCodeProps {
     setDiscountAmount: (amount: number) => void;
 }
 
 const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
-    const [discountCode, setDiscountCode] = useState<string>('');
+    const [discountCode, setDiscountCode] = useState<string>("");
     const [isDiscountCodeVisible, setDiscountCodeVisible] = useState(false);
-    const [discountCodes, setDiscountCodes] = useState<Record<string, { discount: number, used: number, maxcount: number }>>({});
+    const [discountCodes, setDiscountCodes] = useState<DiscountCodeData[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
+    // Fetch danh sách mã giảm giá khi component mount
     useEffect(() => {
         async function fetchDiscountCodes() {
-            const codes = await getDiscountCodes();
-            if (codes) {
-                setDiscountCodes(codes);
+            setLoading(true);
+            try {
+                const codes = await getDiscountCodes();
+                console.log("Fetched discount codes:", codes);
+
+                if (Array.isArray(codes)) {
+                    setDiscountCodes(codes);
+                } else {
+                    console.error("Invalid discount code format:", codes);
+                    toast.error("No valid discount codes found.");
+                    setDiscountCodes([]); // Đảm bảo luôn có mảng rỗng
+                }
+            } catch (error) {
+                console.error("Error fetching discount codes:", error);
+                toast.error("Error loading discount codes.");
+                setDiscountCodes([]); // Đảm bảo set state ngay cả khi lỗi
+            } finally {
+                setLoading(false);
             }
         }
+
         fetchDiscountCodes();
     }, []);
 
+    // Xử lý nhập mã giảm giá
     const handleApplyDiscount = async () => {
-        const code = discountCodes[discountCode.toUpperCase()];
-        if (code) {
-            if (code.used < code.maxcount) {
-                setDiscountAmount(code.discount);
-                await updateDiscountCode(discountCode.toUpperCase(), code.used + 1);
-                toast.success(`Applied discount code: ${discountCode}`);
-            } else {
-                setDiscountAmount(0); // Reset discount amount
-                toast.error(`Discount code ${discountCode} has reached its usage limit!`);
-            }
-        } else {
-            setDiscountAmount(0); // Reset discount amount
-            toast.error(`Invalid discount code,  ${discountCode} `);
+        const trimmedCode = discountCode.trim().toUpperCase();
+        if (!trimmedCode) {
+            toast.error("Please enter a discount code.");
+            return;
+        }
+
+        const foundCodeIndex = discountCodes.findIndex((dc) => dc.code === trimmedCode);
+        if (foundCodeIndex === -1) {
+            setDiscountAmount(0);
+            toast.error(`Invalid discount code: ${discountCode}`);
+            return;
+        }
+
+        const foundCode = discountCodes[foundCodeIndex];
+
+        if (foundCode.used >= foundCode.maxcount) {
+            setDiscountAmount(0);
+            toast.error(`Discount code ${foundCode.code} has reached its usage limit!`);
+            return;
+        }
+
+        // Cập nhật số lần sử dụng và set giá trị giảm giá
+        try {
+            await updateDiscountCode(foundCode.code, foundCode.used + 1);
+            
+            // Cập nhật state để phản ánh số lần sử dụng mới
+            const updatedCodes = [...discountCodes];
+            updatedCodes[foundCodeIndex] = {
+                ...foundCode,
+                used: foundCode.used + 1,
+            };
+            setDiscountCodes(updatedCodes);
+            
+            setDiscountAmount(foundCode.discount);
+            toast.success(`Applied discount code: ${foundCode.code}`);
+        } catch (error) {
+            console.error("Error updating discount code:", error);
+            toast.error("Failed to apply discount code.");
         }
     };
 
@@ -46,12 +96,13 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
                 <button
                     type="button"
                     className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
-                    onClick={() => setDiscountCodeVisible(prev => !prev)}
+                    onClick={() => setDiscountCodeVisible((prev) => !prev)}
                 >
                     Add gift card or discount code
                 </button>
                 <Image src="/quanlity_add.svg" alt="Info Icon" width={20} height={20} />
             </label>
+
             {isDiscountCodeVisible && (
                 <div className="w-full bg-white dark:bg-gray-700 flex items-center p-4 rounded-lg shadow-md mt-1">
                     <input
@@ -60,13 +111,15 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
                         type="text"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
+                        disabled={loading}
                     />
                     <button
                         type="button"
                         onClick={handleApplyDiscount}
-                        className="bg-gray-800 text-white px-4 py-2 rounded-md ml-2 h-10"
+                        className="bg-gray-800 text-white px-4 py-2 rounded-md ml-2 h-10 disabled:opacity-50"
+                        disabled={loading}
                     >
-                        Apply
+                        {loading ? "Loading..." : "Apply"}
                     </button>
                 </div>
             )}

@@ -1,45 +1,45 @@
-import prisma from '../prisma';
+// import prisma from '../../lib/prisma';
+// import type { Prisma } from '@prisma/client';
 
-export async function getProducts() {
-    return await prisma.product.findMany();
-}
+// TODO chua code, err
 
-export async function getProductById(id: string) {
-    return await prisma.product.findUnique({
-        where: { id },
-    });
-}
+// const mariaDb = {
+//     // ✅ Lấy danh sách sản phẩm
+//     getProducts: async () => prisma.product.findMany(),
 
-export async function addProduct(product: any) {
-    return await prisma.product.create({
-        data: product,
-    });
-}
+//     // ✅ Lấy sản phẩm theo ID
+//     getProductById: async (id: string) =>
+//         prisma.product.findUnique({ where: { id } }),
 
-export async function updateProduct(updatedProduct: any) {
-    return await prisma.product.update({
-        where: { id: updatedProduct.id },
-        data: updatedProduct,
-    });
-}
+//     // ✅ Thêm sản phẩm mới
+//     addProduct: async (product: Prisma.ProductCreateInput) =>
+//         prisma.product.create({ data: product }),
 
-export async function deleteProduct(id: string) {
-    return await prisma.product.delete({
-        where: { id },
-    });
-}
+//     // ✅ Cập nhật sản phẩm
+//     updateProduct: async (id: string, updatedData: Prisma.ProductUpdateInput) =>
+//         prisma.product.update({ where: { id }, data: updatedData }),
 
-export async function getDiscountCodes() {
-    const discountCodes = await prisma.discountCode.findMany();
-    return discountCodes.reduce((acc: any, row: any) => {
-        acc[row.code] = { discount: row.discount, used: row.used, maxcount: row.maxcount };
-        return acc;
-    }, {});
-}
+//     // ✅ Xóa sản phẩm
+//     deleteProduct: async (id: string) =>
+//         prisma.product.delete({ where: { id } }),
 
-export async function updateDiscountCode(code: string, usedCount: number) {
-    return await prisma.discountCode.update({
-        where: { code },
-        data: { used: usedCount },
-    });
-}
+//     // ✅ Lấy danh sách mã giảm giá
+//     getDiscountCodes: async () => {
+//         const discountCodes = await prisma.discountCode.findMany();
+//         return discountCodes.map(({ code, discount, used, maxcount }) => ({
+//             code,
+//             discount,
+//             used,
+//             maxcount,
+//         }));
+//     },
+
+//     // ✅ Cập nhật số lần sử dụng mã giảm giá
+//     updateDiscountCode: async (code: string, usedCount: number) =>
+//         prisma.discountCode.update({
+//             where: { code },
+//             data: { used: usedCount },
+//         }),
+// };
+
+// export default mariaDb;

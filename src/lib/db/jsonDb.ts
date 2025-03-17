@@ -1,9 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+// import fs from 'fs';
+// import path from 'path';
 import config from '../../config/configDB';
-// import mariaDb from './mariaDb';
+import mariaDb from './mariaDb';
 
-const dataFilePath = path.join(process.cwd(), 'src', 'lib', 'data.json');
+// const dataFilePath = path.join(process.cwd(), 'src', 'lib', 'data.json');
 
 interface Product {
     id: string;
@@ -25,6 +25,7 @@ interface Product {
 }
 
 interface DiscountCode {
+    code: string;
     discount: number;
     used: number;
     maxcount: number;
@@ -32,74 +33,42 @@ interface DiscountCode {
 
 interface Data {
     products: Product[];
-    discountCodes: Record<string, DiscountCode>;
+    discountCodes: DiscountCode[];
 }
 
-export async function getProducts(): Promise<Product[]> {
-    if (config.useJson) {
-        const response = await fetch('/api/data');
-        const data: Data = await response.json();
-        return data.products;
-    } else {
-        return await mariaDb.getProducts();
-    }
-}
+let cachedDiscountCodes: DiscountCode[] | null = null;
 
-export async function getProductById(id: string): Promise<Product | undefined> {
+export async function getDiscountCodes(): Promise<DiscountCode[] | null> {
     if (config.useJson) {
-        const products = await getProducts();
-        return products.find((product) => product.id === id);
-    } else {
-        return await mariaDb.getProductById(id);
-    }
-}
+        console.log("Running data");
+        if (cachedDiscountCodes) {
+            console.log("Returning cached discount codes");
+            return cachedDiscountCodes;
+        }
 
-export async function addProduct(product: Product): Promise<void> {
-    if (config.useJson) {
-        await fetch('/api/products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(product),
-        });
-    } else {
-        await mariaDb.addProduct(product);
-    }
-}
+        try {
+            console.log("Fetching discount codes from API...");
+            const response = await fetch('/api/discount');
+            if (!response.ok) {
+                throw new Error(`API request failed with status: ${response.status}`);
+            }
 
-export async function updateProduct(updatedProduct: Product): Promise<void> {
-    if (config.useJson) {
-        await fetch(`/api/products/${updatedProduct.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedProduct),
-        });
-    } else {
-        await mariaDb.updateProduct(updatedProduct);
-    }
-}
+            const data = await response.json();
+            console.log("API response:", data);
 
-export async function deleteProduct(id: string): Promise<void> {
-    if (config.useJson) {
-        await fetch(`/api/products/${id}`, {
-            method: 'DELETE',
-        });
+            if (Array.isArray(data)) {
+                cachedDiscountCodes = data;
+                return data;
+            } else {
+                console.error("Invalid discount code format:", data);
+                return null;
+            }
+        } catch (error) {
+            console.error("Error fetching discount codes:", error);
+            return null;
+        }
     } else {
-        await mariaDb.deleteProduct(id);
-    }
-}
-
-export async function getDiscountCodes(): Promise<Record<string, DiscountCode> | null> {
-    if (config.useJson) {
-        console.log("getDiscountCodes");
-        const response = await fetch('/api/discount');
-        const data: Data = await response.json();
-        console.log("data:", data);
-        return data.discountCodes;
-    } else {
+        console.log("Running MariaDB");
         return await mariaDb.getDiscountCodes();
     }
 }
@@ -113,6 +82,13 @@ export async function updateDiscountCode(code: string, usedCount: number): Promi
             },
             body: JSON.stringify({ code, usedCount }),
         });
+
+        // Cập nhật cache
+        if (cachedDiscountCodes) {
+            cachedDiscountCodes = cachedDiscountCodes.map(dc =>
+                dc.code === code ? { ...dc, used: usedCount } : dc
+            );
+        }
     } else {
         await mariaDb.updateDiscountCode(code, usedCount);
     }
