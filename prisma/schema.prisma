@@ -31,3 +31,29 @@ model Employee {
   departmentId Int
   department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
 }
+
+model Product {
+  id                  String   @id @default(cuid())
+  slug                String
+  name                String
+  price               Float
+  shortDescription    String
+  detailedDescription String
+  quantity            Int
+  brand               String
+  originalPrice       Float
+  imageSrc            String
+  sold                Int
+  notes               String
+  promotionStartTime  DateTime?
+  promotionEndTime    DateTime?
+  soldDuringPromotion Int
+  totalSale           Float
+}
+
+model DiscountCode {
+  code     String @id
+  discount Int
+  used     Int
+  maxcount Int
+}

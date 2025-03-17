@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '../../lib/features/cart/cartContext';
-import StepOrderProcess from '../../components/stepOrderProcess';
+import StepOrderProcess from '../../components/StepOrderProcess';
 
 const PaymentPage: React.FC = () => {
     const { state: cart, dispatch } = useCart();

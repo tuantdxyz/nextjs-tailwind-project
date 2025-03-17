@@ -1,0 +1,22 @@
+{
+    "products": [
+        // Danh sách sản phẩm
+    ],
+    "discountCodes": {
+        "SAVE10": {
+            "discount": 10,
+            "used": 0,
+            "maxcount": 10
+        },
+        "SAVE20": {
+            "discount": 15,
+            "used": 0,
+            "maxcount": 10
+        },
+        "SAVE30": {
+            "discount": 20,
+            "used": 0,
+            "maxcount": 10
+        }
+    }
+}
