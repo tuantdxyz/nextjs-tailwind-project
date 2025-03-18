@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
-import { getDiscountCodes, updateDiscountCode } from "../../lib/db/jsonDb";
+import { Discount } from '../../types/index';
 
-interface DiscountCodeData {
-    code: string;
-    discount: number;
-    used: number;
-    maxcount: number;
-}
+// interface DiscountCodeData {
+//     code: string;
+//     discount: number;
+//     used: number;
+//     maxcount: number;
+// }
 
 interface DiscountCodeProps {
     setDiscountAmount: (amount: number) => void;
@@ -17,7 +17,7 @@ interface DiscountCodeProps {
 const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
     const [discountCode, setDiscountCode] = useState<string>("");
     const [isDiscountCodeVisible, setDiscountCodeVisible] = useState(false);
-    const [discountCodes, setDiscountCodes] = useState<DiscountCodeData[]>([]);
+    const [discountCodes, setDiscountCodes] = useState<Discount[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch danh sách mã giảm giá khi component mount
@@ -25,7 +25,12 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
         async function fetchDiscountCodes() {
             setLoading(true);
             try {
-                const codes = await getDiscountCodes();
+                const response = await fetch('/api/discount');
+                if (!response.ok) {
+                    throw new Error(`API request failed with status: ${response.status}`);
+                }
+
+                const codes: Discount[] = await response.json();
                 console.log("Fetched discount codes:", codes);
 
                 if (Array.isArray(codes)) {
@@ -72,8 +77,14 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
 
         // Cập nhật số lần sử dụng và set giá trị giảm giá
         try {
-            await updateDiscountCode(foundCode.code, foundCode.used + 1);
-            
+            await fetch('/api/discount', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code: foundCode.code, usedCount: foundCode.used + 1 }),
+            });
+
             // Cập nhật state để phản ánh số lần sử dụng mới
             const updatedCodes = [...discountCodes];
             updatedCodes[foundCodeIndex] = {
@@ -81,7 +92,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
                 used: foundCode.used + 1,
             };
             setDiscountCodes(updatedCodes);
-            
+
             setDiscountAmount(foundCode.discount);
             toast.success(`Applied discount code: ${foundCode.code}`);
         } catch (error) {

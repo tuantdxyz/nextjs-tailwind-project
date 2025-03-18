@@ -59,3 +59,11 @@ CREATE TABLE `DiscountCode` (
 
 -- AddForeignKey
 ALTER TABLE `Employee` ADD CONSTRAINT `Employee_departmentId_fkey` FOREIGN KEY (`departmentId`) REFERENCES `Department`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- Ex:
+CREATE DATABASE dg_db1 CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+INSERT INTO discountCode (code, discount, used, maxcount) VALUES
+('SAVE10', 10, 5, 10),
+('SAVE20', 15, 3, 10),
+('SAVE30', 20, 0, 10);

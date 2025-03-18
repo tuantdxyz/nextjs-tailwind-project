@@ -26,3 +26,10 @@ export interface Product {
 //     shortDescription: string;
 //     detailedDescription: string;
 // }
+
+export interface Discount {
+    code: string;
+    discount: number;
+    used: number;
+    maxcount: number;
+}
