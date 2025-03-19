@@ -6,11 +6,13 @@ import { useSession } from "next-auth/react";
 import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
 import CartIcon from "./cartIcon";
+import { useCart } from './../lib/features/cart/cartContext';
 
 const Navbar = () => {
     const { data: session } = useSession();
     const { i18n, t } = useTranslation();
     const pathname = usePathname();
+    const { state: cartState } = useCart();
 
     // ✅ Thay đổi ngôn ngữ
     const changeLanguage = (lng: string) => {
@@ -18,9 +20,15 @@ const Navbar = () => {
         localStorage.setItem("lng", lng); // Lưu ngôn ngữ vào localStorage
     };
 
+    // TODO add English
+    // Thiết lập ngôn ngữ mặc định là Tiếng Việt
+    if (i18n.language !== 'vi') {
+        changeLanguage('vi');
+    }
+
     const menuItems = [
         { href: "/", label: "home" },
-        { href: "/services", label: "services" },
+        // { href: "/services", label: "services" },
         { href: "/product", label: "products" },
         { href: "/notifications", label: "notifications", auth: true },
     ];
@@ -38,7 +46,6 @@ const Navbar = () => {
                             width={60}
                             height={40}
                             priority
-                            layout="intrinsic"
                             onError={(e) => (e.currentTarget.src = "/fallback-logo.png")}
                         />
                     </Link>
@@ -57,8 +64,8 @@ const Navbar = () => {
                                     {t(item.label)}
                                     <span
                                         className={`absolute bottom-0 left-0 right-0 h-0.5 transform transition-transform duration-300 ${pathname === item.href
-                                                ? "scale-x-100 bg-blue-500"
-                                                : "scale-x-0 group-hover:scale-x-100 bg-gray-800 dark:bg-white"
+                                            ? "scale-x-100 bg-blue-500"
+                                            : "scale-x-0 group-hover:scale-x-100 bg-gray-800 dark:bg-white"
                                             }`}
                                     ></span>
                                 </Link>
@@ -67,18 +74,26 @@ const Navbar = () => {
                     </div>
 
                     {/* Cart + User + Login + Language */}
-                    <div className="flex items-center space-x-3">
-                        <CartIcon />
+                    <div className="flex items-center space-x-6">
+                        {cartState.items.length > 0 && <CartIcon />}
                         {/* 🔥 Nút chọn ngôn ngữ */}
-                        {/* <select
-                            className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white px-2 py-1 rounded-md"
-                            value={i18n.language}
-                            onChange={(e) => changeLanguage(e.target.value)}
-                        >
-                            <option value="en">🇺🇸 English</option>
-                            <option value="vi">🇻🇳 Tiếng Việt</option>
-                        </select> */}
-
+                        <div className="relative hidden md:block px-2 py-1 rounded-md">
+                            {/* <Image
+                                src="/vietnam_icon.png"
+                                alt="Vietnamese"
+                                width={24}
+                                height={24}
+                            /> */}
+                            {/* TODO change laguage english */}
+                            {/* <Image
+                                src={i18n.language === 'vi' ? '/vietnam_icon.png' : '/usa_icon.png'}
+                                alt={i18n.language === 'vi' ? 'Tiếng Việt' : 'English'}
+                                width={24}
+                                height={24}
+                                onClick={() => changeLanguage(i18n.language === 'vi' ? 'en' : 'vi')}
+                                style={{ cursor: 'pointer' }}
+                            /> */}
+                        </div>
                         {/* User Info */}
                         {session?.user ? (
                             <Link href="/profile">
@@ -92,7 +107,7 @@ const Navbar = () => {
                             </Link>
                         ) : (
                             <Link href="/auth/signin" className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-500 transition">
-                            Login
+                                Login
                             </Link>
                         )}
                     </div>

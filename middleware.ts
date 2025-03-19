@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Trang kiểm tra token và điều hướng
 export function middleware(request: NextRequest) {
     const token = request.cookies.get('next-auth.session-token'); // Lấy token từ cookie
     const isAuthPage = request.nextUrl.pathname.startsWith('/auth'); // Kiểm tra nếu là trang xác thực

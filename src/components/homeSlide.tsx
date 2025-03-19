@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslation } from "next-i18next";
+// import { useTranslation } from "next-i18next";
 
 const HomeSlide: React.FC = () => {
-  const { t } = useTranslation('common');
+  // const { t } = useTranslation('common');
   const [activeIndex, setActiveIndex] = useState(0);
   const slides = [
     // { src: "/img4.jpg", alt: t("Image 4 alt text"), label: t("Slide 1 label"), content: t("Slide 1 content") },
@@ -26,7 +26,7 @@ const HomeSlide: React.FC = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [slides.length]); // Thêm slides.length vào dependency array
 
   const handleNextSlide = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);

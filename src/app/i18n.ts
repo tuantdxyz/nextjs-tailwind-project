@@ -11,9 +11,9 @@ i18n
   .use(LanguageDetector) // Tự động phát hiện ngôn ngữ
   .use(initReactI18next) // Kết nối với React
   .init({
-    fallbackLng: savedLanguage || "en",
+    fallbackLng: savedLanguage || "vi", // Mặc định là tiếng Việt
     supportedLngs: ["en", "vi"],
-    debug: process.env.NODE_ENV === "development",
+    debug: false, // Tắt debug log
     interpolation: { escapeValue: false },
     backend: { loadPath: "/locales/{{lng}}/common.json" },
     detection: {
