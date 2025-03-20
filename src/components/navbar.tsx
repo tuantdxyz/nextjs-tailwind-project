@@ -31,6 +31,7 @@ const Navbar = () => {
         // { href: "/services", label: "services" },
         { href: "/product", label: "products" },
         { href: "/notifications", label: "notifications", auth: true },
+        // { href: "/flashsale", label: "sale" },
     ];
 
     return (
