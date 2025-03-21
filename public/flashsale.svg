@@ -1,0 +1,8 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Thẻ giá (màu đỏ tươi hơn) -->
+  <path d="M6 6H42L34 42H6L6 6Z" fill="#FF3333" stroke="#D81B60" stroke-width="1"/>
+  <!-- Vòng tròn (màu vàng sáng hơn, lớn hơn) -->
+  <circle cx="12" cy="12" r="6" fill="#FFEB3B" stroke="#FBC02D" stroke-width="1"/>
+  <!-- Chữ "SALE" (màu trắng, lớn hơn) -->
+  <text x="12" y="30" fill="#FFFFFF" font-size="14" font-weight="bold" font-family="Arial, sans-serif">SALE</text>
+</svg>
