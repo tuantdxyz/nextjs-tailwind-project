@@ -9,10 +9,11 @@ const Achievements: React.FC = () => {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1920&h=1080&fit=crop"
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1280&h=720&fit=crop" // Giảm kích thước ảnh để tối ưu
           alt="Background"
           layout="fill"
           className="object-cover"
+          loading="lazy" // Thêm lazy loading
         />
       </div>
 
@@ -26,6 +27,7 @@ const Achievements: React.FC = () => {
               width={20}
               height={20}
               alt="customers"
+              loading="lazy" // Thêm lazy loading
             />
             <p className="font-bold text-xl sm:text-2xl md:text-3xl text-blue-600">3000+</p>
           </div>
@@ -40,6 +42,7 @@ const Achievements: React.FC = () => {
               width={20}
               height={20}
               alt="products"
+              loading="lazy" // Thêm lazy loading
             />
             <p className="font-bold text-xl sm:text-2xl md:text-3xl text-blue-600">80+</p>
           </div>
@@ -54,6 +57,7 @@ const Achievements: React.FC = () => {
               width={20}
               height={20}
               alt="months_warranty"
+              loading="lazy" // Thêm lazy loading
             />
             <p className="font-bold text-xl sm:text-2xl md:text-3xl text-blue-600">24</p>
           </div>
@@ -68,6 +72,7 @@ const Achievements: React.FC = () => {
               width={20}
               height={20}
               alt="orders_daily"
+              loading="lazy" // Thêm lazy loading
             />
             <p className="font-bold text-xl sm:text-2xl md:text-3xl text-blue-600">1000+</p>
           </div>

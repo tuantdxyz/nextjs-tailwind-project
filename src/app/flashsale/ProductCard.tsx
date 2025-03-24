@@ -15,7 +15,8 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ name, price, originalPrice, imageSrc, slug, onSelect }) => {
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg flex flex-col h-[300px] relative">
+        <div className="rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg flex flex-col h-[300px] relative">
+            {/* Bỏ bg-white để không có background cụ thể */}
             {/* Ảnh sản phẩm */}
             <div className="relative w-full h-40">
                 <Image
@@ -24,6 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, originalPrice, i
                     width={300}
                     height={160}
                     className="w-full h-40 object-cover"
+                    loading="lazy" // Thêm lazy loading để tối ưu
                 />
                 {/* Biểu tượng SALE (góc trên bên phải, to hơn, nhấp nháy) */}
                 <div className="absolute top-2 right-2">
@@ -33,26 +35,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, originalPrice, i
                         width={40}
                         height={40}
                         className="animate-pulse shadow-md"
+                        loading="lazy" // Thêm lazy loading
                     />
                 </div>
                 {/* Biểu tượng GIFT (giữa, sát đáy ảnh, không nhấp nháy) */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
-                    <Image
-                        src="https://img.icons8.com/color/48/000000/gift--v1.png"
-                        alt="Gift"
-                        width={32}
-                        height={32}
-                        className="shadow-md"
-                    />
-                </div>
+                {/* <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+          <Image
+            src="https://img.icons8.com/color/48/000000/gift--v1.png"
+            alt="Gift"
+            width={32}
+            height={32}
+            className="shadow-md"
+            loading="lazy"
+          />
+        </div> */}
             </div>
             {/* Nội dung */}
             <div className="p-4 flex flex-col items-center justify-center flex-grow space-y-1">
-                <h3 className="text-lg font-semibold text-gray-800 truncate max-w-[180px]">{name}</h3>
+                <h3 className="text-lg font-semibold text-gray-800 truncate max-w-[180px] dark:text-white">
+                    {name}
+                </h3>
                 <div className="flex items-center gap-2">
-                    {originalPrice && (
-                        <p className="text-sm text-gray-400 line-through">{originalPrice}</p>
-                    )}
+                    {/* {originalPrice && (
+                        <p className="text-sm text-gray-400 line-through dark:text-gray-300">{originalPrice}</p>
+                    )} */}
                     <p className="text-lg font-bold text-red-600">{price}</p>
                 </div>
                 <Link

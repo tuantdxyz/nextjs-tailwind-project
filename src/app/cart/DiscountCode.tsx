@@ -69,7 +69,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ setDiscountAmount }) => {
 
         const foundCode = discountCodes[foundCodeIndex];
 
-        if (foundCode.used >= foundCode.maxcount) {
+        if (foundCode.used >= foundCode.maxCount) {
             setDiscountAmount(0);
             toast.error(`Discount code ${foundCode.code} has reached its usage limit!`);
             return;

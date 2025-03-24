@@ -1,47 +1,47 @@
-// Interface quản lý thông tin người dùng
+// src/types/index.d.ts
+
+// Model quản lý thông tin người dùng
 export interface User {
-    id: string;
+    id: number; // Đổi từ string sang number
     username: string;
     password: string;
     email: string;
     createdAt: Date;
     updatedAt: Date;
-    roleId: string;
-    walletId: string;
-    userLevelId: string;
+    roleId: number; // Đổi từ string sang number
+    walletId?: number | null; // Đổi từ string sang number
+    userLevelId: number; // Đổi từ string sang number
     firstName: string;
     lastName: string;
     phone: string;
     address: string;
-    groups: GroupMembership[];
-    cart?: Cart;
 }
 
-// Interface quản lý vai trò người dùng
+// Model quản lý vai trò người dùng
 export interface Role {
-    id: string;
+    id: number; // Đổi từ string sang number
     name: string;
 }
 
-// Interface quản lý các cấp độ người dùng
+// Model quản lý các cấp độ người dùng
 export interface UserLevel {
-    id: string;
+    id: number; // Đổi từ string sang number
     name: string;
     minPoints: number;
 }
 
-// Interface quản lý ví tiền của người dùng
+// Model quản lý ví tiền của người dùng
 export interface Wallet {
-    id: string;
-    userId: string;
+    id: number; // Đổi từ string sang number
+    userId: number; // Đổi từ string sang number
     balance: number;
     createdAt: Date;
     updatedAt: Date;
 }
 
-// Interface quản lý sản phẩm
+// Model quản lý sản phẩm
 export interface Product {
-    id: string;
+    id: number; // Đổi từ string sang number
     slug: string;
     name: string;
     price: number;
@@ -53,117 +53,123 @@ export interface Product {
     imageSrc: string;
     sold: number;
     notes: string;
-    categoryId: string;
+    categoryId: number; // Đổi từ string sang number
 }
 
-// Interface quản lý danh mục sản phẩm
+// Model quản lý danh mục sản phẩm
 export interface Category {
-    id: string;
+    id: number; // Đổi từ string sang number
     name: string;
-    products: Product[];
 }
 
-// Interface quản lý mã giảm giá
+// Model quản lý mã giảm giá
 export interface Discount {
-    code: string;
+    code: string; // Giữ nguyên string vì đây không phải id tự tăng
     discount: number;
     used: number;
     maxCount: number;
 }
 
-// Interface quản lý chiến dịch khuyến mãi
+// Model quản lý chiến dịch khuyến mãi
 export interface Sale {
-    id: string;
+    id: number; // Đổi từ string sang number
     name: string;
-    discountId: string;
+    discountId: string; // Giữ nguyên string vì tham chiếu đến code của Discount
     soldDuringPromotion: number;
     totalSale: number;
     revenue: number;
-    discount: Discount;
-    products: SaleProduct[];
 }
 
-// Interface cho bảng trung gian quản lý nhiều sản phẩm trong nhiều chiến dịch khuyến mãi
+// Bảng trung gian quản lý nhiều sản phẩm trong nhiều chiến dịch khuyến mãi
 export interface SaleProduct {
-    id: string;
-    saleId: string;
-    productId: string;
-    sale: Sale;
-    product: Product;
+    id: number; // Đổi từ string sang number
+    saleId: number; // Đổi từ string sang number
+    productId: number; // Đổi từ string sang number
 }
 
-// Interface quản lý nhóm mua hàng
+// Model quản lý nhóm mua hàng
 export interface GroupBuy {
-    id: string;
+    id: number; // Đổi từ string sang number
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    memberships: GroupMembership[];
-    roles: GroupRole[];
-    cart?: Cart;
 }
 
-// Interface quản lý thành viên trong nhóm mua hàng
+// Model quản lý thành viên trong nhóm mua hàng
 export interface GroupMembership {
-    id: string;
-    groupId: string;
-    userId: string;
+    id: number; // Đổi từ string sang number
+    groupId: number; // Đổi từ string sang number
+    userId: number; // Đổi từ string sang number
     joinedAt: Date;
 }
 
-// Interface quản lý vai trò trong nhóm mua hàng
+// Model quản lý vai trò trong nhóm mua hàng
 export interface GroupRole {
-    id: string;
-    groupId: string;
-    roleId: string;
+    id: number; // Đổi từ string sang number
+    groupId: number; // Đổi từ string sang number
+    roleId: number; // Đổi từ string sang number
 }
 
-// Interface quản lý giỏ hàng
+// Model quản lý giỏ hàng
 export interface Cart {
-    id: string;
-    userId: string | null;
-    groupId: string | null;
+    id: number; // Đổi từ string sang number
+    userId?: number | null; // Đổi từ string sang number
+    groupId?: number | null; // Đổi từ string sang number
     createdAt: Date;
     updatedAt: Date;
-    items: CartItem[];
 }
 
-// Interface quản lý sản phẩm trong giỏ hàng
+// Model quản lý sản phẩm trong giỏ hàng
 export interface CartItem {
-    id: string;
-    cartId: string;
-    productId: string;
+    id: number; // Đổi từ string sang number
+    cartId: number; // Đổi từ string sang number
+    productId: number; // Đổi từ string sang number
     quantity: number;
-    product: Product;
 }
 
-// Interface quản lý phiên đấu giá
+// Model quản lý phiên đấu giá
 export interface Auction {
-    id: string;
-    productId: string;
+    id: number; // Đổi từ string sang number
+    productId: number; // Đổi từ string sang number
     startingPrice: number;
     startDate: Date;
     endDate: Date;
-    highestBidderId: string | null;
-    highestBid: number | null;
+    highestBidderId?: number | null; // Đổi từ string sang number
+    highestBid?: number | null;
     isActive: boolean;
-    product: Product;
-    bids: AuctionBid[];
 }
 
-// Interface quản lý lượt đấu giá trong phiên đấu giá
+// Model quản lý lượt đấu giá trong phiên đấu giá
 export interface AuctionBid {
-    id: string;
-    auctionId: string;
-    userId: string;
+    id: number; // Đổi từ string sang number
+    auctionId: number; // Đổi từ string sang number
+    userId: number; // Đổi từ string sang number
     bidAmount: number;
     createdAt: Date;
 }
 
-// Interface quản lý lịch trình khuyến mãi
+// Model quản lý lịch trình khuyến mãi
 export interface PromotionalSchedule {
-    id: string;
+    id: number; // Đổi từ string sang number
     startDate: Date;
     endDate: Date;
-    sales: Sale[];
+}
+
+// Model quản lý đánh giá của khách hàng
+export interface Review {
+    id: number; // Đổi từ string sang number
+    userId: number; // Đổi từ string sang number
+    productId: number; // Đổi từ string sang number
+    content: string;
+    rating: number;
+    imageUrl?: string | null;
+    createdAt: Date;
+}
+
+// Model quản lý sản phẩm trong whitelist của khách hàng
+export interface WhitelistProduct {
+    id: number; // Đổi từ string sang number
+    userId: number; // Đổi từ string sang number
+    productId: number; // Đổi từ string sang number
+    addedAt: Date;
 }
